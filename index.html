@@ -1157,6 +1157,18 @@ document.getElementById("orderForm").addEventListener("submit", async function(e
 
     orderText.textContent = preparedOrder;
     orderResult.classList.add("show");
+    const paymentLink = document.createElement("a");
+    paymentLink.href = "https://www.sberbank.com/sms/pbpn?requisiteNumber=79181005416";
+    paymentLink.target = "_blank";
+    paymentLink.rel = "noopener noreferrer";
+    paymentLink.textContent = "ОПЛАТИТЬ ЧЕРЕЗ СБЕР";
+    paymentLink.className = "submit-button";
+    paymentLink.style.display = "block";
+    paymentLink.style.textAlign = "center";
+    paymentLink.style.textDecoration = "none";
+    paymentLink.style.marginTop = "15px";
+
+    orderResult.appendChild(paymentLink);
 
     try {
         await fetch("https://script.google.com/macros/s/AKfycbzqjzNewXXgs8tws4QVnnXkPUcpMVTajlgQXnVhHVTQgEzJlaMgzNCO2Oad7WeEKbeO/exec", {
