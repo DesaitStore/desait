@@ -1134,7 +1134,8 @@ function outsideClick(event) {
 
 productSelect.addEventListener("change", updatePrice);
 
-document.getElementById("orderForm").addEventListener("submit", function(event) {
+
+document.getElementById("orderForm").addEventListener("submit", async function(event) {
     event.preventDefault();
 
     const product = productSelect.value;
@@ -1156,7 +1157,30 @@ document.getElementById("orderForm").addEventListener("submit", function(event) 
 
     orderText.textContent = preparedOrder;
     orderResult.classList.add("show");
+
+    try {
+        await fetch("https://script.google.com/macros/s/AKfycbzqjzNewXXgs8tws4QVnnXkPUcpMVTajlgQXnVhHVTQgEzJlaMgzNCO2Oad7WeEKbeO/exec", {
+            method: "POST",
+            mode: "no-cors",
+            headers: {
+                "Content-Type": "text/plain;charset=utf-8"
+            },
+            body: JSON.stringify({
+                product: product,
+                price: formatPrice(price),
+                contact: contact,
+                comment: comment
+            })
+        });
+
+        alert("Заявка подготовлена! Проверь Telegram после отправки.");
+
+    } catch (error) {
+        alert("Не удалось отправить заявку. Попробуй ещё раз.");
+        console.error(error);
+    }
 });
+
 
 async function copyOrder() {
     if (!preparedOrder) return;
