@@ -17,44 +17,77 @@
     --dark: #030313;
 }
 
-* { box-sizing: border-box; }
+* {
+    box-sizing: border-box;
+}
 
 body {
     margin: 0;
     min-height: 100vh;
+    overflow-x: hidden;
     font-family: 'Montserrat', sans-serif;
     color: white;
     background:
         radial-gradient(ellipse at 15% 8%, rgba(101,0,255,.25), transparent 35%),
         radial-gradient(ellipse at 88% 30%, rgba(0,190,255,.16), transparent 32%),
-        #030313;
-    overflow-x: hidden;
+        radial-gradient(ellipse at 50% 100%, rgba(92,0,255,.13), transparent 45%),
+        var(--dark);
 }
 
 header {
     position: relative;
+    isolation: isolate;
     overflow: hidden;
+    padding: clamp(48px,8vw,94px) 16px 48px;
     text-align: center;
-    padding: clamp(48px, 8vw, 94px) 16px 48px;
-    background: linear-gradient(180deg, #07042377, transparent);
     border-bottom: 1px solid #00cfff33;
+}
+
+header::before,
+header::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    width: 420px;
+    height: 240px;
+    border-radius: 50%;
+    filter: blur(5px);
+    pointer-events: none;
+}
+
+header::before {
+    top: -100px;
+    left: -140px;
+    background: radial-gradient(ellipse, #ff00c83b, transparent 70%);
+}
+
+header::after {
+    top: -100px;
+    right: -140px;
+    background: radial-gradient(ellipse, #00aaff3b, transparent 70%);
 }
 
 header h1 {
     display: inline-block;
     margin: 0;
     font-family: 'Orbitron', sans-serif;
-    font-size: clamp(2.7rem, 9vw, 6.3rem);
+    font-size: clamp(2.7rem,9vw,6.3rem);
     font-weight: 900;
-    letter-spacing: clamp(3px, 1vw, 10px);
+    letter-spacing: clamp(3px,1vw,10px);
     line-height: 1.1;
-    background: linear-gradient(100deg, #ff00c8, #8d38ff, #00dfff, #f4fdff);
+    background: linear-gradient(
+        100deg,
+        #ff00c8 5%,
+        #8d38ff 35%,
+        #00dfff 70%,
+        #f4fdff 100%
+    );
     background-size: 180% auto;
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 0 22px #5d1eff70);
-    animation: shine 6s linear infinite, float 4s ease-in-out infinite;
+    filter: drop-shadow(0 0 22px #5d1eff6b);
+    animation: logoShine 6s linear infinite, logoFloat 4s ease-in-out infinite;
 }
 
 header h1 span {
@@ -64,11 +97,11 @@ header h1 span {
     letter-spacing: .38em;
 }
 
-@keyframes shine {
+@keyframes logoShine {
     to { background-position: 180% center; }
 }
 
-@keyframes float {
+@keyframes logoFloat {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-4px); }
 }
@@ -76,54 +109,58 @@ header h1 span {
 .container {
     max-width: 1500px;
     margin: 0 auto;
-    padding: 30px clamp(14px, 3vw, 42px) 42px;
+    padding: 30px clamp(14px,3vw,42px) 42px;
 }
 
 .section-title {
-    font-family: 'Orbitron', sans-serif;
-    text-align: center;
     margin: 0 0 28px;
     color: #e9e4ff;
-    font-size: clamp(1rem, 2vw, 1.5rem);
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(1rem,2vw,1.5rem);
+    text-align: center;
     letter-spacing: .16em;
     text-shadow: 0 0 18px #6e22ff70;
 }
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: clamp(10px, 1.5vw, 24px);
+    grid-template-columns: repeat(5,minmax(0,1fr));
+    gap: clamp(10px,1.5vw,24px);
 }
 
 .card {
     display: flex;
     flex-direction: column;
+    min-width: 0;
     overflow: hidden;
-    border: 1px solid #8a34ffcc;
+    border: 1px solid #8a34ffd9;
     border-radius: 15px;
-    background: linear-gradient(180deg, #0d0a30, #040318);
+    background: linear-gradient(180deg,#0d0a30,#040318);
     box-shadow: 0 8px 30px #0008;
-    transition: .3s;
+    transition: transform .3s, border-color .3s, box-shadow .3s;
 }
 
 .card:hover {
     transform: translateY(-7px);
     border-color: var(--cyan);
-    box-shadow: 0 14px 38px #00bfff2b, 0 0 25px #8c00ff30;
+    box-shadow: 0 14px 38px #00bfff2b, 0 0 25px #8c00ff2e;
 }
 
 .card-img {
-    height: clamp(145px, 17vw, 250px);
     position: relative;
+    display: flex;
+    height: clamp(145px,17vw,250px);
     overflow: hidden;
-    background: linear-gradient(135deg, #005c97, #363795);
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg,#005c97,#363795);
 }
 
 .card-img img {
-    width: 100%;
-    height: 100%;
     position: absolute;
     inset: 0;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
     transition: transform .5s ease;
 }
@@ -136,29 +173,65 @@ header h1 span {
     display: flex;
     flex: 1;
     flex-direction: column;
-    padding: clamp(14px, 1.8vw, 25px) clamp(10px, 1.3vw, 20px) 18px;
+    padding: clamp(14px,1.8vw,25px) clamp(10px,1.3vw,20px) 18px;
     text-align: center;
 }
 
 .card-title {
     margin: 0 0 12px;
-    font-size: clamp(.86rem, 1.3vw, 1.2rem);
+    font-size: clamp(.86rem,1.3vw,1.2rem);
     font-weight: 900;
-    text-transform: uppercase;
     line-height: 1.35;
+    text-transform: uppercase;
 }
 
-.description {
-    color: #bdb4d0;
-    font-size: .85rem;
-    line-height: 1.6;
-}
-
+/* АНИМИРОВАННЫЕ ЦЕНЫ */
 .card-price {
+    position: relative;
+    display: inline-block;
+    align-self: center;
     margin: 10px 0 18px;
-    color: var(--cyan);
-    font: 900 clamp(1.15rem, 2vw, 1.8rem) 'Orbitron', sans-serif;
-    text-shadow: 0 0 16px #00dfd840;
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(1.15rem,2vw,1.8rem);
+    font-weight: 900;
+    white-space: nowrap;
+    color: transparent;
+    background: linear-gradient(
+        100deg,
+        #00dfd8 0%,
+        #e9ffff 25%,
+        #00dfd8 48%,
+        #8cfff8 62%,
+        #00dfd8 100%
+    );
+    background-size: 220% auto;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 8px #00dfd855);
+    animation:
+        priceShimmer 3.2s linear infinite,
+        pricePulse 2.4s ease-in-out infinite;
+}
+
+@keyframes priceShimmer {
+    from { background-position: 100% center; }
+    to { background-position: -120% center; }
+}
+
+@keyframes pricePulse {
+    0%, 100% {
+        filter: drop-shadow(0 0 5px #00dfd833);
+        transform: scale(1);
+    }
+    50% {
+        filter: drop-shadow(0 0 14px #00fff0aa);
+        transform: scale(1.045);
+    }
+}
+
+.card:hover .card-price {
+    animation-duration: 1.5s, 1.2s;
 }
 
 .btn {
@@ -167,7 +240,7 @@ header h1 span {
     padding: 14px 10px;
     border: 1px solid #ff64ef;
     border-radius: 10px;
-    background: linear-gradient(100deg, #ff00cb, #8b00ff);
+    background: linear-gradient(100deg,#ff00cb,#8b00ff);
     color: white;
     font: 900 .9rem 'Montserrat', sans-serif;
     letter-spacing: 1px;
@@ -184,12 +257,12 @@ header h1 span {
 }
 
 .benefits {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 18px;
     max-width: 1250px;
     margin: 12px auto 0;
     padding: 18px 24px 30px;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 18px;
 }
 
 .benefit {
@@ -201,9 +274,11 @@ header h1 span {
     border-right: 1px solid #34265d;
 }
 
-.benefit:last-child { border-right: 0; }
+.benefit:last-child {
+    border-right: 0;
+}
 
-.benefit .symbol {
+.symbol {
     color: var(--cyan);
     font-size: 2rem;
     text-shadow: 0 0 18px #00dfff70;
@@ -229,9 +304,11 @@ footer {
     font-size: .82rem;
 }
 
-footer p { margin: 8px 0 0; }
+footer p {
+    margin: 8px 0 0;
+}
 
-/* Оформление заказа */
+/* ОКНО ЗАКАЗА */
 .modal {
     display: none;
     position: fixed;
@@ -245,7 +322,9 @@ footer p { margin: 8px 0 0; }
     backdrop-filter: blur(8px);
 }
 
-.modal.active { display: flex; }
+.modal.active {
+    display: flex;
+}
 
 .modal-content {
     position: relative;
@@ -275,7 +354,9 @@ footer p { margin: 8px 0 0; }
     cursor: pointer;
 }
 
-.form-group { margin: 18px 0; }
+.form-group {
+    margin: 18px 0;
+}
 
 .form-group label {
     display: block;
@@ -310,7 +391,9 @@ footer p { margin: 8px 0 0; }
     background: #7928ca25;
 }
 
-.order-total strong { color: var(--cyan); }
+.order-total strong {
+    color: var(--cyan);
+}
 
 .notice {
     color: #948aa6;
@@ -329,32 +412,99 @@ footer p { margin: 8px 0 0; }
     overflow-wrap: anywhere;
 }
 
-.success.show { display: block; }
-
-@media (max-width: 1050px) {
-    .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    .benefits { grid-template-columns: repeat(2, 1fr); }
-    .benefit:nth-child(2) { border-right: 0; }
+.success.show {
+    display: block;
 }
 
-@media (max-width: 620px) {
-    header { padding: 42px 12px 32px; }
-    .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-    .card-img { height: 145px; }
-    .card-content { padding: 14px 10px; }
-    .card-title { font-size: .84rem; }
-    .card-price { font-size: 1.1rem; }
-    .btn { padding: 12px 6px; font-size: .8rem; }
-    .benefits { padding: 14px 10px 22px; gap: 8px; }
-    .benefit { justify-content: flex-start; gap: 8px; border-right: 0; }
-    .benefit .symbol { font-size: 1.5rem; }
-    .benefit strong { font-size: .72rem; }
-    .benefit small { font-size: .65rem; }
+/* АДАПТИВНОСТЬ */
+@media(max-width: 1050px) {
+    .grid {
+        grid-template-columns: repeat(3,minmax(0,1fr));
+    }
+
+    .benefits {
+        grid-template-columns: repeat(2,1fr);
+    }
+
+    .benefit:nth-child(2) {
+        border-right: 0;
+    }
 }
 
-@media (max-width: 360px) {
-    .grid { grid-template-columns: 1fr; }
-    .card-img { height: 200px; }
+@media(max-width: 620px) {
+    header {
+        padding: 42px 12px 32px;
+    }
+
+    .container {
+        padding: 25px 14px 30px;
+    }
+
+    .grid {
+        grid-template-columns: repeat(2,minmax(0,1fr));
+        gap: 12px;
+    }
+
+    .card-img {
+        height: 145px;
+    }
+
+    .card-content {
+        padding: 14px 10px;
+    }
+
+    .card-title {
+        font-size: .84rem;
+    }
+
+    .card-price {
+        font-size: 1.1rem;
+    }
+
+    .btn {
+        padding: 12px 6px;
+        font-size: .8rem;
+    }
+
+    .benefits {
+        padding: 14px 10px 22px;
+        gap: 8px;
+    }
+
+    .benefit {
+        justify-content: flex-start;
+        gap: 8px;
+        border-right: 0;
+    }
+
+    .symbol {
+        font-size: 1.5rem;
+    }
+
+    .benefit strong {
+        font-size: .72rem;
+    }
+
+    .benefit small {
+        font-size: .65rem;
+    }
+}
+
+@media(max-width: 360px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .card-img {
+        height: 200px;
+    }
+}
+
+@media(prefers-reduced-motion: reduce) {
+    header h1,
+    .card-price {
+        animation: none;
+    }
 }
 </style>
 </head>
@@ -372,56 +522,84 @@ footer p { margin: 8px 0 0; }
 
         <article class="card">
             <div class="card-img">
-                <img src="https://cdn1.epicgames.com/offer/fn/DE_FNECO_41-00_RMT_CoreV-BucksPacks_800_EGS_Landscape_2560x1440_2560x1440-ab020b33da7247398a34d25547671516" alt="800 V-Bucks" loading="lazy">
+                <img
+                    src="https://cdn1.epicgames.com/offer/fn/DE_FNECO_41-00_RMT_CoreV-BucksPacks_800_EGS_Landscape_2560x1440_2560x1440-ab020b33da7247398a34d25547671516"
+                    alt="800 V-Bucks"
+                    loading="lazy">
             </div>
             <div class="card-content">
                 <h3 class="card-title">800 V-Bucks</h3>
                 <div class="card-price">590 ₽</div>
-                <button class="btn" onclick="openOrder('800 V-Bucks')">Купить</button>
+                <button class="btn" onclick="openOrder('800 V-Bucks')">
+                    Купить
+                </button>
             </div>
         </article>
 
         <article class="card">
             <div class="card-img">
-                <img src="https://cdn1.epicgames.com/offer/fn/EN_FNECO_41-00_RMT_CoreV-BucksPacks_2400_EGS_Landscape_2560x1440_2560x1440-e51d802c9d414431973ae3e2ba60528d" alt="2400 V-Bucks" loading="lazy">
+                <img
+                    src="https://cdn1.epicgames.com/offer/fn/EN_FNECO_41-00_RMT_CoreV-BucksPacks_2400_EGS_Landscape_2560x1440_2560x1440-e51d802c9d414431973ae3e2ba60528d"
+                    alt="2400 V-Bucks"
+                    loading="lazy">
             </div>
             <div class="card-content">
                 <h3 class="card-title">2400 V-Bucks</h3>
                 <div class="card-price">1100 ₽</div>
-                <button class="btn" onclick="openOrder('2400 V-Bucks')">Купить</button>
+                <button class="btn" onclick="openOrder('2400 V-Bucks')">
+                    Купить
+                </button>
             </div>
         </article>
 
         <article class="card">
             <div class="card-img">
-                <img src="https://cdn1.epicgames.com/offer/fn/DE_FNECO_41-00_RMT_CoreV-BucksPacks_4500_EGS_Landscape_2560x1440_2560x1440-dfe9057f285740be86e086b1be4ecb18" alt="4500 V-Bucks" loading="lazy">
+                <img
+                    src="https://cdn1.epicgames.com/offer/fn/DE_FNECO_41-00_RMT_CoreV-BucksPacks_4500_EGS_Landscape_2560x1440_2560x1440-dfe9057f285740be86e086b1be4ecb18"
+                    alt="4500 V-Bucks"
+                    loading="lazy">
             </div>
             <div class="card-content">
                 <h3 class="card-title">4500 V-Bucks</h3>
                 <div class="card-price">1990 ₽</div>
-                <button class="btn" onclick="openOrder('4500 V-Bucks')">Купить</button>
+                <button class="btn" onclick="openOrder('4500 V-Bucks')">
+                    Купить
+                </button>
             </div>
         </article>
 
         <article class="card">
             <div class="card-img">
-                <img src="https://thespike-strapi-cms.s3.us-east-1.amazonaws.com/fortnite_crew_hero_6acc50e94d.jpg" alt="Fortnite Crew" loading="lazy">
+                <img
+                    src="https://thespike-strapi-cms.s3.us-east-1.amazonaws.com/fortnite_crew_hero_6acc50e94d.jpg"
+                    alt="Fortnite Crew"
+                    loading="lazy">
             </div>
             <div class="card-content">
                 <h3 class="card-title">Fortnite Crew</h3>
                 <div class="card-price">410 ₽</div>
-                <button class="btn" onclick="openOrder('Fortnite Crew')">Купить</button>
+                <button class="btn" onclick="openOrder('Fortnite Crew')">
+                    Купить
+                </button>
             </div>
         </article>
 
         <article class="card">
             <div class="card-img">
-                <img src="https://cdn1.epicgames.com/offer/fn/RU_FNECO_41-00_RMT_TheAcePack_EGS_Landscape_2560x1440_2560x1440-f0fd4baf103f43b29a14bd403cea6db6" alt="Кража века" loading="lazy">
+                <img
+                    src="https://cdn1.epicgames.com/offer/fn/RU_FNECO_41-00_RMT_TheAcePack_EGS_Landscape_2560x1440_2560x1440-f0fd4baf103f43b29a14bd403cea6db6"
+                    alt="Набор Кража века"
+                    loading="lazy">
             </div>
             <div class="card-content">
                 <h3 class="card-title">Кража века</h3>
+                <p style="color:#bdb4d0;font-size:.85rem;line-height:1.6">
+                    Набор Fortnite для твоей коллекции.
+                </p>
                 <div class="card-price">1090 ₽</div>
-                <button class="btn" onclick="openOrder('Кража века')">Купить</button>
+                <button class="btn" onclick="openOrder('Кража века')">
+                    Купить
+                </button>
             </div>
         </article>
 
@@ -429,20 +607,36 @@ footer p { margin: 8px 0 0; }
 </main>
 
 <section class="benefits" aria-label="Преимущества магазина">
-    <div class="benefit"><span class="symbol">ϟ</span><div><strong>БЫСТРО</strong><small>Оперативная обработка</small></div></div>
-    <div class="benefit"><span class="symbol">♢</span><div><strong>БЕЗОПАСНО</strong><small>Заказ под контролем</small></div></div>
-    <div class="benefit"><span class="symbol">☆</span><div><strong>ВЫГОДНО</strong><small>Игровые предложения</small></div></div>
-    <div class="benefit"><span class="symbol">☏</span><div><strong>ПОДДЕРЖКА</strong><small>Связь с продавцом</small></div></div>
+    <div class="benefit">
+        <span class="symbol">ϟ</span>
+        <div><strong>БЫСТРО</strong><small>Оперативная обработка</small></div>
+    </div>
+    <div class="benefit">
+        <span class="symbol">♢</span>
+        <div><strong>БЕЗОПАСНО</strong><small>Заказ под контролем</small></div>
+    </div>
+    <div class="benefit">
+        <span class="symbol">☆</span>
+        <div><strong>ВЫГОДНО</strong><small>Игровые предложения</small></div>
+    </div>
+    <div class="benefit">
+        <span class="symbol">☏</span>
+        <div><strong>ПОДДЕРЖКА</strong><small>Связь с продавцом</small></div>
+    </div>
 </section>
 
 <footer>
-    © 2026 DESAIT STORE
+    © 2026 desait STORE
     <p>Независимый магазин. Не связан с Epic Games.</p>
 </footer>
 
-<div class="modal" id="orderModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+<!-- ОКНО ОФОРМЛЕНИЯ ЗАКАЗА -->
+<div class="modal" id="orderModal" role="dialog"
+     aria-modal="true" aria-labelledby="modalTitle">
+
     <div class="modal-content">
-        <button class="close-btn" onclick="closeOrder()" aria-label="Закрыть">&times;</button>
+        <button class="close-btn" onclick="closeOrder()"
+                aria-label="Закрыть">&times;</button>
 
         <h2 id="modalTitle">Оформление заказа</h2>
         <p>Выбери товар и оставь контакт для связи.</p>
@@ -466,18 +660,22 @@ footer p { margin: 8px 0 0; }
 
             <div class="form-group">
                 <label for="contact">Твой Telegram или другой контакт</label>
-                <input id="contact" name="contact" type="text" placeholder="@username" maxlength="100" required>
+                <input id="contact" name="contact" type="text"
+                       placeholder="@username" maxlength="100" required>
             </div>
 
             <button class="btn" type="submit">Подготовить заказ</button>
 
             <p class="notice">
-                Заказ пока не отправляется продавцу автоматически.
+                Заказ не отправляется продавцу автоматически.
                 После подготовки скопируй его и передай продавцу.
             </p>
 
             <div class="success" id="orderSuccess" role="status"></div>
-            <button type="button" class="btn" id="copyBtn" style="display:none;margin-top:12px" onclick="copyOrder()">Скопировать заказ</button>
+
+            <button type="button" class="btn" id="copyBtn"
+                    style="display:none;margin-top:12px"
+                    onclick="copyOrder()">Скопировать заказ</button>
         </form>
     </div>
 </div>
@@ -495,9 +693,12 @@ let preparedOrder = '';
 function openOrder(product) {
     productSelect.value = product;
     updatePrice();
+
     orderSuccess.classList.remove('show');
+    orderSuccess.textContent = '';
     copyBtn.style.display = 'none';
     copyBtn.textContent = 'Скопировать заказ';
+
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
 }
@@ -509,16 +710,21 @@ function closeOrder() {
 
 function updatePrice() {
     const option = productSelect.options[productSelect.selectedIndex];
+
     totalPrice.textContent =
         Number(option.dataset.price).toLocaleString('ru-RU') + ' ₽';
 }
 
 modal.addEventListener('click', function(event) {
-    if (event.target === modal) closeOrder();
+    if (event.target === modal) {
+        closeOrder();
+    }
 });
 
 document.addEventListener('keydown', function(event) {
-    if (event.key === 'Escape') closeOrder();
+    if (event.key === 'Escape') {
+        closeOrder();
+    }
 });
 
 orderForm.addEventListener('submit', function(event) {
@@ -530,12 +736,14 @@ orderForm.addEventListener('submit', function(event) {
     if (!contact) return;
 
     preparedOrder =
-        'Заказ DESAIT STORE\n' +
+        'Заказ desait STORE\n' +
         'Товар: ' + option.value + '\n' +
         'Цена: ' + option.dataset.price + ' ₽\n' +
         'Контакт: ' + contact;
 
-    orderSuccess.textContent = 'Заказ подготовлен!\n\n' + preparedOrder;
+    orderSuccess.textContent =
+        'Заказ подготовлен!\n\n' + preparedOrder;
+
     orderSuccess.classList.add('show');
     copyBtn.style.display = 'block';
 });
@@ -546,7 +754,7 @@ async function copyOrder() {
         copyBtn.textContent = 'Скопировано!';
     } catch (error) {
         orderSuccess.textContent +=
-            '\n\nВыдели текст заказа и скопируй его вручную.';
+            '\n\nНе удалось скопировать автоматически. Выдели текст заказа и скопируй вручную.';
     }
 }
 </script>
