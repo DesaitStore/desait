@@ -1157,6 +1157,7 @@ document.getElementById("orderForm").addEventListener("submit", async function(e
 
     orderText.textContent = preparedOrder;
     orderResult.classList.add("show");
+    orderResult.textContent = "Заказ оформлен! Пожалуйста, ожидайте — продавец скоро свяжется с вами.";
    
     try {
         await fetch("https://script.google.com/macros/s/AKfycbzqjzNewXXgs8tws4QVnnXkPUcpMVTajlgQXnVhHVTQgEzJlaMgzNCO2Oad7WeEKbeO/exec", {
