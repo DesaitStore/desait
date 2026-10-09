@@ -1,0 +1,555 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DESAIT STORE — Fortnite</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Orbitron:wght@600;700;900&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --purple: #7928ca;
+    --pink: #ff007f;
+    --cyan: #00dfd8;
+    --dark: #030313;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: 'Montserrat', sans-serif;
+    color: white;
+    background:
+        radial-gradient(ellipse at 15% 8%, rgba(101,0,255,.25), transparent 35%),
+        radial-gradient(ellipse at 88% 30%, rgba(0,190,255,.16), transparent 32%),
+        #030313;
+    overflow-x: hidden;
+}
+
+header {
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    padding: clamp(48px, 8vw, 94px) 16px 48px;
+    background: linear-gradient(180deg, #07042377, transparent);
+    border-bottom: 1px solid #00cfff33;
+}
+
+header h1 {
+    display: inline-block;
+    margin: 0;
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(2.7rem, 9vw, 6.3rem);
+    font-weight: 900;
+    letter-spacing: clamp(3px, 1vw, 10px);
+    line-height: 1.1;
+    background: linear-gradient(100deg, #ff00c8, #8d38ff, #00dfff, #f4fdff);
+    background-size: 180% auto;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 22px #5d1eff70);
+    animation: shine 6s linear infinite, float 4s ease-in-out infinite;
+}
+
+header h1 span {
+    display: block;
+    margin-top: 5px;
+    font-size: .42em;
+    letter-spacing: .38em;
+}
+
+@keyframes shine {
+    to { background-position: 180% center; }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+}
+
+.container {
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 30px clamp(14px, 3vw, 42px) 42px;
+}
+
+.section-title {
+    font-family: 'Orbitron', sans-serif;
+    text-align: center;
+    margin: 0 0 28px;
+    color: #e9e4ff;
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    letter-spacing: .16em;
+    text-shadow: 0 0 18px #6e22ff70;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: clamp(10px, 1.5vw, 24px);
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid #8a34ffcc;
+    border-radius: 15px;
+    background: linear-gradient(180deg, #0d0a30, #040318);
+    box-shadow: 0 8px 30px #0008;
+    transition: .3s;
+}
+
+.card:hover {
+    transform: translateY(-7px);
+    border-color: var(--cyan);
+    box-shadow: 0 14px 38px #00bfff2b, 0 0 25px #8c00ff30;
+}
+
+.card-img {
+    height: clamp(145px, 17vw, 250px);
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #005c97, #363795);
+}
+
+.card-img img {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    inset: 0;
+    object-fit: cover;
+    transition: transform .5s ease;
+}
+
+.card:hover .card-img img {
+    transform: scale(1.06);
+}
+
+.card-content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: clamp(14px, 1.8vw, 25px) clamp(10px, 1.3vw, 20px) 18px;
+    text-align: center;
+}
+
+.card-title {
+    margin: 0 0 12px;
+    font-size: clamp(.86rem, 1.3vw, 1.2rem);
+    font-weight: 900;
+    text-transform: uppercase;
+    line-height: 1.35;
+}
+
+.description {
+    color: #bdb4d0;
+    font-size: .85rem;
+    line-height: 1.6;
+}
+
+.card-price {
+    margin: 10px 0 18px;
+    color: var(--cyan);
+    font: 900 clamp(1.15rem, 2vw, 1.8rem) 'Orbitron', sans-serif;
+    text-shadow: 0 0 16px #00dfd840;
+}
+
+.btn {
+    width: 100%;
+    margin-top: auto;
+    padding: 14px 10px;
+    border: 1px solid #ff64ef;
+    border-radius: 10px;
+    background: linear-gradient(100deg, #ff00cb, #8b00ff);
+    color: white;
+    font: 900 .9rem 'Montserrat', sans-serif;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: .25s;
+    box-shadow: 0 5px 18px #ff00bb35;
+}
+
+.btn:hover {
+    filter: brightness(1.2);
+    box-shadow: 0 6px 24px #ff00bb70;
+    transform: translateY(-1px);
+}
+
+.benefits {
+    max-width: 1250px;
+    margin: 12px auto 0;
+    padding: 18px 24px 30px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+}
+
+.benefit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 8px;
+    border-right: 1px solid #34265d;
+}
+
+.benefit:last-child { border-right: 0; }
+
+.benefit .symbol {
+    color: var(--cyan);
+    font-size: 2rem;
+    text-shadow: 0 0 18px #00dfff70;
+}
+
+.benefit strong {
+    display: block;
+    font-size: .85rem;
+}
+
+.benefit small {
+    display: block;
+    margin-top: 4px;
+    color: #bcb5d6;
+    font-size: .72rem;
+}
+
+footer {
+    padding: 20px 15px 28px;
+    border-top: 1px solid #ffffff12;
+    color: #9389a7;
+    text-align: center;
+    font-size: .82rem;
+}
+
+footer p { margin: 8px 0 0; }
+
+/* Оформление заказа */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    overflow-y: auto;
+    background: #030107e8;
+    backdrop-filter: blur(8px);
+}
+
+.modal.active { display: flex; }
+
+.modal-content {
+    position: relative;
+    width: 100%;
+    max-width: 430px;
+    margin: auto;
+    padding: 30px 24px;
+    border: 1px solid #ffffff20;
+    border-radius: 14px;
+    background: #0f0a1c;
+    box-shadow: 0 20px 50px #000c;
+}
+
+.modal h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.3rem;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 16px;
+    border: 0;
+    background: none;
+    color: #aaa;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.form-group { margin: 18px 0; }
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #c6bdd6;
+    font-size: .85rem;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #ffffff25;
+    border-radius: 7px;
+    outline: none;
+    background: #161026;
+    color: white;
+    font: inherit;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: var(--pink);
+}
+
+.order-total {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+    padding: 15px;
+    border-radius: 8px;
+    background: #7928ca25;
+}
+
+.order-total strong { color: var(--cyan); }
+
+.notice {
+    color: #948aa6;
+    font-size: .75rem;
+    line-height: 1.5;
+}
+
+.success {
+    display: none;
+    margin-top: 18px;
+    padding: 15px;
+    border: 1px solid #00dfd850;
+    border-radius: 8px;
+    color: var(--cyan);
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.success.show { display: block; }
+
+@media (max-width: 1050px) {
+    .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .benefits { grid-template-columns: repeat(2, 1fr); }
+    .benefit:nth-child(2) { border-right: 0; }
+}
+
+@media (max-width: 620px) {
+    header { padding: 42px 12px 32px; }
+    .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .card-img { height: 145px; }
+    .card-content { padding: 14px 10px; }
+    .card-title { font-size: .84rem; }
+    .card-price { font-size: 1.1rem; }
+    .btn { padding: 12px 6px; font-size: .8rem; }
+    .benefits { padding: 14px 10px 22px; gap: 8px; }
+    .benefit { justify-content: flex-start; gap: 8px; border-right: 0; }
+    .benefit .symbol { font-size: 1.5rem; }
+    .benefit strong { font-size: .72rem; }
+    .benefit small { font-size: .65rem; }
+}
+
+@media (max-width: 360px) {
+    .grid { grid-template-columns: 1fr; }
+    .card-img { height: 200px; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>DESAIT<span>STORE</span></h1>
+</header>
+
+<main class="container">
+    <h2 class="section-title">МАГАЗИН FORTNITE</h2>
+
+    <div class="grid">
+
+        <article class="card">
+            <div class="card-img">
+                <img src="https://cdn1.epicgames.com/offer/fn/DE_FNECO_41-00_RMT_CoreV-BucksPacks_800_EGS_Landscape_2560x1440_2560x1440-ab020b33da7247398a34d25547671516" alt="800 V-Bucks" loading="lazy">
+            </div>
+            <div class="card-content">
+                <h3 class="card-title">800 V-Bucks</h3>
+                <div class="card-price">590 ₽</div>
+                <button class="btn" onclick="openOrder('800 V-Bucks')">Купить</button>
+            </div>
+        </article>
+
+        <article class="card">
+            <div class="card-img">
+                <img src="https://cdn1.epicgames.com/offer/fn/EN_FNECO_41-00_RMT_CoreV-BucksPacks_2400_EGS_Landscape_2560x1440_2560x1440-e51d802c9d414431973ae3e2ba60528d" alt="2400 V-Bucks" loading="lazy">
+            </div>
+            <div class="card-content">
+                <h3 class="card-title">2400 V-Bucks</h3>
+                <div class="card-price">1100 ₽</div>
+                <button class="btn" onclick="openOrder('2400 V-Bucks')">Купить</button>
+            </div>
+        </article>
+
+        <article class="card">
+            <div class="card-img">
+                <img src="https://cdn1.epicgames.com/offer/fn/DE_FNECO_41-00_RMT_CoreV-BucksPacks_4500_EGS_Landscape_2560x1440_2560x1440-dfe9057f285740be86e086b1be4ecb18" alt="4500 V-Bucks" loading="lazy">
+            </div>
+            <div class="card-content">
+                <h3 class="card-title">4500 V-Bucks</h3>
+                <div class="card-price">1990 ₽</div>
+                <button class="btn" onclick="openOrder('4500 V-Bucks')">Купить</button>
+            </div>
+        </article>
+
+        <article class="card">
+            <div class="card-img">
+                <img src="https://thespike-strapi-cms.s3.us-east-1.amazonaws.com/fortnite_crew_hero_6acc50e94d.jpg" alt="Fortnite Crew" loading="lazy">
+            </div>
+            <div class="card-content">
+                <h3 class="card-title">Fortnite Crew</h3>
+                <div class="card-price">410 ₽</div>
+                <button class="btn" onclick="openOrder('Fortnite Crew')">Купить</button>
+            </div>
+        </article>
+
+        <article class="card">
+            <div class="card-img">
+                <img src="https://cdn1.epicgames.com/offer/fn/RU_FNECO_41-00_RMT_TheAcePack_EGS_Landscape_2560x1440_2560x1440-f0fd4baf103f43b29a14bd403cea6db6" alt="Кража века" loading="lazy">
+            </div>
+            <div class="card-content">
+                <h3 class="card-title">Кража века</h3>
+                <div class="card-price">1090 ₽</div>
+                <button class="btn" onclick="openOrder('Кража века')">Купить</button>
+            </div>
+        </article>
+
+    </div>
+</main>
+
+<section class="benefits" aria-label="Преимущества магазина">
+    <div class="benefit"><span class="symbol">ϟ</span><div><strong>БЫСТРО</strong><small>Оперативная обработка</small></div></div>
+    <div class="benefit"><span class="symbol">♢</span><div><strong>БЕЗОПАСНО</strong><small>Заказ под контролем</small></div></div>
+    <div class="benefit"><span class="symbol">☆</span><div><strong>ВЫГОДНО</strong><small>Игровые предложения</small></div></div>
+    <div class="benefit"><span class="symbol">☏</span><div><strong>ПОДДЕРЖКА</strong><small>Связь с продавцом</small></div></div>
+</section>
+
+<footer>
+    © 2026 DESAIT STORE
+    <p>Независимый магазин. Не связан с Epic Games.</p>
+</footer>
+
+<div class="modal" id="orderModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-content">
+        <button class="close-btn" onclick="closeOrder()" aria-label="Закрыть">&times;</button>
+
+        <h2 id="modalTitle">Оформление заказа</h2>
+        <p>Выбери товар и оставь контакт для связи.</p>
+
+        <form id="orderForm">
+            <div class="form-group">
+                <label for="product">Товар</label>
+                <select id="product" name="product" onchange="updatePrice()">
+                    <option value="800 V-Bucks" data-price="590">800 V-Bucks — 590 ₽</option>
+                    <option value="2400 V-Bucks" data-price="1100">2400 V-Bucks — 1100 ₽</option>
+                    <option value="4500 V-Bucks" data-price="1990">4500 V-Bucks — 1990 ₽</option>
+                    <option value="Fortnite Crew" data-price="410">Fortnite Crew — 410 ₽</option>
+                    <option value="Кража века" data-price="1090">Кража века — 1090 ₽</option>
+                </select>
+            </div>
+
+            <div class="order-total">
+                <span>Итого:</span>
+                <strong id="totalPrice">590 ₽</strong>
+            </div>
+
+            <div class="form-group">
+                <label for="contact">Твой Telegram или другой контакт</label>
+                <input id="contact" name="contact" type="text" placeholder="@username" maxlength="100" required>
+            </div>
+
+            <button class="btn" type="submit">Подготовить заказ</button>
+
+            <p class="notice">
+                Заказ пока не отправляется продавцу автоматически.
+                После подготовки скопируй его и передай продавцу.
+            </p>
+
+            <div class="success" id="orderSuccess" role="status"></div>
+            <button type="button" class="btn" id="copyBtn" style="display:none;margin-top:12px" onclick="copyOrder()">Скопировать заказ</button>
+        </form>
+    </div>
+</div>
+
+<script>
+const modal = document.getElementById('orderModal');
+const productSelect = document.getElementById('product');
+const totalPrice = document.getElementById('totalPrice');
+const orderForm = document.getElementById('orderForm');
+const orderSuccess = document.getElementById('orderSuccess');
+const copyBtn = document.getElementById('copyBtn');
+
+let preparedOrder = '';
+
+function openOrder(product) {
+    productSelect.value = product;
+    updatePrice();
+    orderSuccess.classList.remove('show');
+    copyBtn.style.display = 'none';
+    copyBtn.textContent = 'Скопировать заказ';
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeOrder() {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+function updatePrice() {
+    const option = productSelect.options[productSelect.selectedIndex];
+    totalPrice.textContent =
+        Number(option.dataset.price).toLocaleString('ru-RU') + ' ₽';
+}
+
+modal.addEventListener('click', function(event) {
+    if (event.target === modal) closeOrder();
+});
+
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') closeOrder();
+});
+
+orderForm.addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const option = productSelect.options[productSelect.selectedIndex];
+    const contact = document.getElementById('contact').value.trim();
+
+    if (!contact) return;
+
+    preparedOrder =
+        'Заказ DESAIT STORE\n' +
+        'Товар: ' + option.value + '\n' +
+        'Цена: ' + option.dataset.price + ' ₽\n' +
+        'Контакт: ' + contact;
+
+    orderSuccess.textContent = 'Заказ подготовлен!\n\n' + preparedOrder;
+    orderSuccess.classList.add('show');
+    copyBtn.style.display = 'block';
+});
+
+async function copyOrder() {
+    try {
+        await navigator.clipboard.writeText(preparedOrder);
+        copyBtn.textContent = 'Скопировано!';
+    } catch (error) {
+        orderSuccess.textContent +=
+            '\n\nВыдели текст заказа и скопируй его вручную.';
+    }
+}
+</script>
+
+</body>
+</html>
