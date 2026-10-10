@@ -574,6 +574,107 @@ footer strong {
         transition: none!important;
     }
 }
+.hero {
+    background:
+        linear-gradient(90deg, rgba(3,5,17,.82), rgba(3,5,17,.15)),
+        url("./background.png") center / cover no-repeat !important;
+}
+
+.hero::after {
+    display: none !important;
+}
+
+/* === DESAIT STORE: ANIMATED NEON BACKGROUND === */
+
+.background {
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            circle at 15% 25%,
+            rgba(123, 31, 255, 0.35),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 85% 35%,
+            rgba(0, 180, 255, 0.24),
+            transparent 38%
+        ),
+        radial-gradient(
+            circle at 50% 90%,
+            rgba(236, 22, 212, 0.22),
+            transparent 40%
+        ),
+        #030511;
+
+    background-size: 180% 180%;
+    animation: neonFlow 12s ease-in-out infinite alternate;
+}
+
+/* Плавающее свечение */
+body::before {
+    content: "";
+    position: fixed;
+    inset: -30%;
+    z-index: -1;
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            circle at 30% 40%,
+            rgba(124, 58, 237, 0.12),
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 70% 60%,
+            rgba(0, 229, 255, 0.10),
+            transparent 25%
+        );
+
+    filter: blur(35px);
+    animation: glowMove 16s ease-in-out infinite alternate;
+}
+
+/* Движение цветных волн */
+@keyframes neonFlow {
+    0% {
+        background-position: 0% 0%;
+        filter: hue-rotate(0deg);
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 100%;
+        filter: hue-rotate(25deg);
+    }
+}
+
+@keyframes glowMove {
+    0% {
+        transform: translate(-4%, -2%) scale(1);
+    }
+
+    50% {
+        transform: translate(3%, 2%) scale(1.08);
+    }
+
+    100% {
+        transform: translate(-2%, 4%) scale(1.02);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .background,
+    body::before {
+        animation: none;
+    }
+}
 
 </style>
 </head>
