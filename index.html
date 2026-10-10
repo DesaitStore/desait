@@ -7,7 +7,72 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Orbitron:wght@600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
+ 
+.product-card img {
+    border-radius: 18px;
+    border: 2px solid #8b5cf6;
+    box-shadow: 0 0 15px #8b5cf688;
+    transition: all 0.4s ease;
+}
 
+.product-card img:hover {
+    transform: scale(1.07);
+    border-color: #00e5ff;
+    box-shadow: 0 0 25px #00e5ff;
+}
+
+/* Красивый шрифт для названий и цен */
+.product-content h3 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 15px;
+    color: #ffffff;
+    text-shadow: 0 0 10px #8b5cf6;
+    transition: color .3s, text-shadow .3s;
+}
+
+.product-card:hover .product-content h3 {
+    color: #00e5ff;
+    text-shadow: 0 0 15px #00e5ff;
+}
+
+/* Анимированные цены */
+.card-price,
+.premium-price strong {
+    font-family: 'Orbitron', sans-serif;
+    color: #00e5ff;
+    text-shadow: 0 0 8px #00e5ff88;
+    animation: priceGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes priceGlow {
+    from {
+        text-shadow: 0 0 5px #00e5ff66;
+        transform: scale(1);
+    }
+    to {
+        text-shadow: 0 0 18px #00e5ff;
+        transform: scale(1.04);
+    }
+}
+
+/* Плавное появление карточек при наведении */
+.product-card {
+    transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-7px) scale(1.015);
+    box-shadow: 0 0 25px #7c3aed66;
+}
+
+/* Красивый шрифт для заголовков разделов */
+.section-heading h2 {
+    font-family: 'Orbitron', sans-serif;
+    background: linear-gradient(90deg, #ffffff, #c084fc, #00e5ff);
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+}
 :root {
     --bg: #030511;
     --purple: #7c3aed;
@@ -801,7 +866,7 @@ body::before {
     <div class="products">
         <article class="product-card">
             <div class="product-image">
-                <img src="https://telegram.org/img/t_logo.png" alt="Telegram Premium" loading="lazy">
+                <img src="tg-premium.png" alt="Telegram Premium">
             </div>
             <div class="product-content">
                 <div class="product-category">TELEGRAM • PREMIUM</div>
@@ -1115,5 +1180,3 @@ document.addEventListener("keydown", function(event) {
 </script>
 </body>
 </html>
-
-добавь в выделенной зоне где написано DESAIT STORE смотреть товары наши преимущества приложенную картинку
