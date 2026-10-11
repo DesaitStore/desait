@@ -1,2220 +1,431 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DESAIT STORE — Новогодний Сезон 🎄❄️</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Orbitron:wght@600;700;800;900&display=swap" rel="stylesheet">
-
-<style>
-:root {
-    --bg-deep: #020617;
-    --frost-blue: #00f0ff;
-    --ice-purple: #a855f7;
-    --neon-pink: #ec4899;
-    --snow-white: #f8fafc;
-    --card-bg: rgba(15, 23, 42, 0.85);
-    --border-frost: rgba(0, 240, 255, 0.4);
-}
-
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-html {
-    scroll-behavior: smooth;
-    scroll-padding-top: 120px;
-}
-
-body {
-    min-height: 100vh;
-    overflow-x: hidden;
-    background: var(--bg-deep);
-    color: var(--snow-white);
-    font-family: 'Montserrat', sans-serif;
-}
-
-/* === СВЕТЯЩАЯСЯ ГИРЛЯНДА === */
-.garland {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 18px;
-    z-index: 1000;
-    display: flex;
-    justify-content: space-around;
-    pointer-events: none;
-    background: rgba(2, 6, 23, 0.75);
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid rgba(0, 240, 255, 0.2);
-}
-
-.garland span {
-    display: inline-block;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    animation: garlandGlow 1.4s infinite alternate ease-in-out;
-}
-
-.garland span:nth-child(5n+1) { background: #00f0ff; box-shadow: 0 0 16px #00f0ff, 0 0 30px #00f0ff; animation-delay: 0.1s; }
-.garland span:nth-child(5n+2) { background: #ec4899; box-shadow: 0 0 16px #ec4899, 0 0 30px #ec4899; animation-delay: 0.4s; }
-.garland span:nth-child(5n+3) { background: #a855f7; box-shadow: 0 0 16px #a855f7, 0 0 30px #a855f7; animation-delay: 0.7s; }
-.garland span:nth-child(5n+4) { background: #38bdf8; box-shadow: 0 0 16px #38bdf8, 0 0 30px #38bdf8; animation-delay: 0.3s; }
-.garland span:nth-child(5n+5) { background: #ffffff; box-shadow: 0 0 16px #ffffff, 0 0 30px #ffffff; animation-delay: 0.9s; }
-
-@keyframes garlandGlow {
-    0% { opacity: 0.3; transform: scale(0.7); filter: brightness(0.5); }
-    100% { opacity: 1; transform: scale(1.3); filter: brightness(1.5); }
-}
-
-.background {
-    position: fixed;
-    inset: 0;
-    z-index: -2;
-    background: 
-        radial-gradient(circle at 15% 20%, rgba(0, 240, 255, 0.25), transparent 45%),
-        radial-gradient(circle at 85% 80%, rgba(168, 85, 247, 0.25), transparent 45%),
-        radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.15), transparent 50%),
-        #020617;
-    background-size: 250% 250%;
-    animation: pulseIridescentBg 12s ease-in-out infinite alternate;
-}
-
-@keyframes pulseIridescentBg {
-    0% { background-position: 0% 0%; filter: hue-rotate(0deg) brightness(1); }
-    50% { background-position: 100% 50%; filter: hue-rotate(25deg) brightness(1.15); }
-    100% { background-position: 50% 100%; filter: hue-rotate(-15deg) brightness(1); }
-}
-
-.snow-canvas {
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-}
-
-header {
-    position: sticky;
-    top: 25px;
-    z-index: 100;
-    margin: 15px 3%;
-    padding: 18px 32px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-    flex-wrap: wrap;
-    background: rgba(15, 23, 42, 0.85);
-    border: 1px solid var(--border-frost);
-    border-radius: 20px;
-    backdrop-filter: blur(20px);
-    box-shadow: 0 10px 40px rgba(0, 240, 255, 0.15);
-}
-
-.logo {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 24px;
-    font-weight: 900;
-    text-decoration: none;
-    color: white;
-    text-shadow: 0 0 20px var(--frost-blue);
-}
-
-.logo span { color: var(--frost-blue); }
-
-nav {
-    display: flex;
-    align-items: center;
-    gap: 22px;
-    flex-wrap: wrap;
-}
-
-nav a {
-    color: #cbd5e1;
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 700;
-    transition: 0.3s;
-}
-
-nav a:hover {
-    color: var(--frost-blue);
-    text-shadow: 0 0 12px var(--frost-blue);
-}
-
-button { font-family: inherit; cursor: pointer; }
-
-/* === УВЕЛИЧЕННЫЕ И СОВРЕМЕННЫЕ КНОПКИ В ШАПКЕ === */
-.header-button, .primary-button, .buy-button, .submit-button, .logout-button {
-    position: relative;
-    overflow: hidden;
-    color: white;
-    background: linear-gradient(135deg, #00f0ff, #7c3aed);
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    border-radius: 14px;
-    font-weight: 900;
-    box-shadow: 0 0 20px rgba(0, 240, 255, 0.35);
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.header-button::before, .primary-button::before, .buy-button::before, .submit-button::before, .logout-button::before {
-    content: '';
-    position: absolute;
-    top: 0; left: -100%;
-    width: 100%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
-    transition: 0.5s;
-}
-
-.header-button:hover::before, .primary-button:hover::before, .buy-button:hover::before, .submit-button:hover::before, .logout-button:hover::before {
-    left: 100%;
-}
-
-.header-button { 
-    padding: 13px 24px; 
-    font-size: 14px; 
-}
-
-.header-button:hover, .buy-button:hover, .primary-button:hover, .submit-button:hover, .logout-button:hover {
-    transform: translateY(-4px) scale(1.04);
-    box-shadow: 0 0 35px #00f0ff, 0 0 15px #a855f7;
-    border-color: #fff;
-}
-
-/* СОВРЕМЕННАЯ КНОПКА ПРОФИЛЯ (GLASSMORPHISM) */
-.header-profile-btn {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 8px 22px 8px 10px;
-    border-radius: 40px;
-    background: rgba(15, 23, 42, 0.75) !important;
-    border: 1px solid rgba(0, 240, 255, 0.6) !important;
-    backdrop-filter: blur(12px);
-    box-shadow: 0 0 20px rgba(0, 240, 255, 0.3), inset 0 0 12px rgba(0, 240, 255, 0.15);
-    font-size: 14px;
-    font-weight: 800;
-    color: #fff;
-}
-
-.header-profile-btn:hover {
-    background: rgba(0, 240, 255, 0.15) !important;
-    border-color: #00f0ff !important;
-    box-shadow: 0 0 30px rgba(0, 240, 255, 0.6), inset 0 0 20px rgba(0, 240, 255, 0.3);
-}
-
-.header-profile-btn img {
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid var(--frost-blue);
-    box-shadow: 0 0 12px var(--frost-blue);
-    transition: transform 0.3s;
-}
-
-.header-profile-btn:hover img {
-    transform: scale(1.1) rotate(5deg);
-}
-
-.logout-button {
-    background: linear-gradient(135deg, #ef4444, #ec4899);
-    width: 100%;
-    padding: 12px;
-    margin-top: 15px;
-    font-size: 12px;
-}
-
-.hero {
-    min-height: 520px;
-    padding: 65px 6%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-    border: 1px solid rgba(0, 240, 255, 0.35);
-    border-radius: 24px;
-    margin: 20px 3%;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 30px rgba(0, 240, 255, 0.2);
-}
-
-/* БАННЕР С СЕВЕРНЫМ СИЯНИЕМ ПРОЗРАЧНЫЙ НА 70% (OPACITY: 0.3) */
-.hero-bg-img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: 0;
-    opacity: 0.3;
-    filter: brightness(0.85) contrast(1.1);
-}
-
-.hero::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(90deg, rgba(2, 6, 23, 0.92) 0%, rgba(2, 6, 23, 0.7) 55%, rgba(2, 6, 23, 0.35) 100%);
-    z-index: 1;
-    pointer-events: none;
-}
-
-.hero-content {
-    position: relative;
-    z-index: 2;
-}
-
-.hero-label {
-    padding: 8px 18px;
-    border: 1px solid var(--frost-blue);
-    background: rgba(0, 240, 255, 0.15);
-    color: #bae6fd;
-    border-radius: 30px;
-    font-size: 11px;
-    font-weight: 900;
-    letter-spacing: 2px;
-    margin-bottom: 18px;
-    box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
-    backdrop-filter: blur(5px);
-    display: inline-block;
-}
-
-.hero h1 {
-    font-family: 'Orbitron', sans-serif;
-    font-size: clamp(38px, 7vw, 75px);
-    font-weight: 900;
-    line-height: 1.1;
-    text-shadow: 0 0 35px rgba(0, 240, 255, 0.6);
-}
-
-.hero h1 span {
-    background: linear-gradient(90deg, #fff, #38bdf8, #ec4899);
-    color: transparent;
-    background-clip: text;
-    -webkit-background-clip: text;
-}
-
-.hero p {
-    max-width: 520px;
-    margin-top: 15px;
-    color: #cbd5e1;
-    line-height: 1.7;
-    font-size: 14px;
-    text-shadow: 0 2px 10px rgba(0,0,0,0.8);
-}
-
-.hero-buttons {
-    display: flex;
-    gap: 15px;
-    flex-wrap: wrap;
-    margin-top: 28px;
-}
-
-.primary-button, .secondary-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 14px 26px;
-    border-radius: 12px;
-    font-size: 13px;
-    font-weight: 900;
-    text-decoration: none;
-}
-
-.secondary-button {
-    color: white;
-    border: 1px solid rgba(168, 85, 247, 0.6);
-    background: rgba(15, 23, 42, 0.8);
-    box-shadow: 0 0 20px rgba(168, 85, 247, 0.25);
-    transition: 0.3s;
-    backdrop-filter: blur(5px);
-}
-
-.secondary-button:hover {
-    border-color: var(--frost-blue);
-    box-shadow: 0 0 30px rgba(0, 240, 255, 0.5);
-    transform: translateY(-3px);
-}
-
-.section {
-    max-width: 1400px;
-    padding: 40px 5%;
-    margin: auto;
-}
-
-.section-heading { margin-bottom: 25px; }
-
-.section-tag {
-    color: var(--frost-blue);
-    font-size: 11px;
-    font-weight: 900;
-    letter-spacing: 2px;
-}
-
-.section-heading h2 {
-    font-family: 'Orbitron', sans-serif;
-    font-size: clamp(24px, 3.5vw, 34px);
-    margin-top: 5px;
-    text-shadow: 0 0 12px rgba(0, 240, 255, 0.4);
-}
-
-.section-heading p {
-    color: #94a3b8;
-    font-size: 13px;
-    margin-top: 5px;
-}
-
-.sub-category-title {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 18px;
-    color: var(--snow-white);
-    margin: 30px 0 15px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    text-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
-}
-
-.sub-category-title::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: linear-gradient(90deg, rgba(0, 240, 255, 0.3), transparent);
-}
-
-.products {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 20px;
-}
-
-.product-card {
-    overflow: hidden;
-    background: var(--card-bg);
-    border: 1px solid var(--border-frost);
-    border-radius: 20px;
-    transition: 0.4s ease;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-    position: relative;
-    backdrop-filter: blur(10px);
-}
-
-.discount-badge {
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    z-index: 5;
-    background: linear-gradient(135deg, #ef4444, #ec4899);
-    color: white;
-    padding: 6px 12px;
-    font-size: 10px;
-    font-weight: 900;
-    border-radius: 8px;
-    box-shadow: 0 0 15px rgba(239, 68, 68, 0.7);
-    letter-spacing: 1px;
-    animation: badgePulse 2s infinite alternate;
-}
-
-.best-deal-badge {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    z-index: 5;
-    background: linear-gradient(135deg, #a855f7, #6366f1);
-    color: white;
-    padding: 6px 12px;
-    font-size: 10px;
-    font-weight: 900;
-    border-radius: 8px;
-    box-shadow: 0 0 15px rgba(168, 85, 247, 0.8);
-    letter-spacing: 1px;
-}
-
-@keyframes badgePulse {
-    0% { transform: scale(1); box-shadow: 0 0 10px rgba(239, 68, 68, 0.5); }
-    100% { transform: scale(1.05); box-shadow: 0 0 20px rgba(239, 68, 68, 0.9); }
-}
-
-.product-card:hover {
-    transform: translateY(-8px) scale(1.015);
-    border-color: var(--frost-blue);
-    box-shadow: 0 20px 40px rgba(0, 240, 255, 0.3);
-}
-
-.product-image {
-    height: 185px;
-    overflow: hidden;
-    background: radial-gradient(circle, #1e293b, #020617);
-    border-bottom: 1px solid var(--border-frost);
-    position: relative;
-}
-
-.product-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-}
-
-.product-card:hover .product-image img {
-    transform: scale(1.08) rotate(1deg);
-}
-
-.product-content { padding: 18px; }
-
-.product-category {
-    color: #c084fc;
-    font-size: 10px;
-    font-weight: 900;
-    letter-spacing: 1.5px;
-}
-
-.product-content h3 {
-    margin-top: 8px;
-    font-family: 'Orbitron', sans-serif;
-    font-size: 15px;
-    font-weight: 800;
-    color: white;
-    text-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
-}
-
-.product-description {
-    min-height: 45px;
-    margin-top: 8px;
-    color: #94a3b8;
-    font-size: 11px;
-    line-height: 1.6;
-}
-
-.price-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-    margin-top: 15px;
-    padding-top: 12px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.card-price-wrap {
-    display: flex;
-    flex-direction: column;
-}
-
-.old-price {
-    font-size: 10px;
-    color: #64748b;
-    text-decoration: line-through;
-}
-
-.card-price {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 16px;
-    font-weight: 900;
-    color: var(--frost-blue);
-    text-shadow: 0 0 12px rgba(0, 240, 255, 0.5);
-}
-
-.buy-button {
-    padding: 10px 14px;
-    font-size: 10px;
-}
-
-.premium-prices {
-    display: grid;
-    gap: 8px;
-    margin-top: 15px;
-}
-
-.premium-price {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    padding: 10px 12px;
-    border: 1px solid rgba(0, 240, 255, 0.25);
-    border-radius: 10px;
-    background: rgba(2, 6, 23, 0.6);
-    transition: 0.2s;
-}
-
-.premium-price:hover {
-    border-color: var(--frost-blue);
-    background: rgba(0, 240, 255, 0.05);
-}
-
-.premium-price span {
-    font-size: 11px;
-    color: #cbd5e1;
-}
-
-.premium-price strong {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 12px;
-    color: var(--frost-blue);
-    white-space: nowrap;
-}
-
-.benefits {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 20px;
-    margin-top: 25px;
-}
-
-.benefit {
-    padding: 25px;
-    border: 1px solid var(--border-frost);
-    background: var(--card-bg);
-    border-radius: 18px;
-    transition: 0.3s;
-    backdrop-filter: blur(10px);
-}
-
-.benefit:hover {
-    border-color: #a855f7;
-    transform: translateY(-5px);
-    box-shadow: 0 15px 35px rgba(168, 85, 247, 0.25);
-}
-
-.benefit-icon {
-    font-size: 32px;
-    margin-bottom: 15px;
-    filter: drop-shadow(0 0 15px #00f0ff);
-}
-
-.benefit h3 { font-size: 15px; margin-bottom: 8px; font-family: 'Orbitron', sans-serif; }
-.benefit p { color: #94a3b8; font-size: 12px; line-height: 1.7; }
-
-footer {
-    margin: 40px 3% 20px;
-    padding: 25px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 15px;
-    flex-wrap: wrap;
-    border: 1px solid var(--border-frost);
-    border-radius: 20px;
-    background: var(--card-bg);
-    color: #94a3b8;
-    font-size: 11px;
-    backdrop-filter: blur(10px);
-}
-
-footer strong { color: white; font-family: 'Orbitron', sans-serif; }
-
-.modal {
-    display: none;
-    position: fixed;
-    inset: 0;
-    z-index: 2000;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    background: rgba(2, 6, 23, 0.85);
-    backdrop-filter: blur(15px);
-}
-
-.modal.active { display: flex; }
-
-.modal-content {
-    position: relative;
-    width: 100%;
-    max-width: 440px;
-    padding: 30px;
-    background: #0f172a;
-    border: 1px solid var(--frost-blue);
-    border-radius: 22px;
-    box-shadow: 0 0 60px rgba(0, 240, 255, 0.35);
-}
-
-.modal-close {
-    position: absolute;
-    top: 12px;
-    right: 16px;
-    background: none;
-    border: none;
-    color: #94a3b8;
-    font-size: 28px;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.modal-close:hover { color: #fff; transform: scale(1.1); }
-
-.modal-content h2 {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 20px;
-    margin-bottom: 8px;
-    color: white;
-}
-
-.modal-subtitle {
-    color: #94a3b8;
-    font-size: 12px;
-    line-height: 1.6;
-    margin-bottom: 20px;
-}
-
-.form-label {
-    display: block;
-    color: #38bdf8;
-    font-size: 11px;
-    font-weight: 900;
-    margin: 15px 0 6px;
-}
-
-.form-control {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid rgba(0, 240, 255, 0.3);
-    border-radius: 10px;
-    background: #020617;
-    color: white;
-    outline: none;
-    font-family: inherit;
-    font-size: 12px;
-    transition: 0.3s;
-}
-
-.form-control:focus { border-color: var(--frost-blue); box-shadow: 0 0 15px rgba(0, 240, 255, 0.4); }
-
-.total-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 0;
-    margin-top: 15px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.total-row span { color: #94a3b8; font-size: 12px; }
-.total-row strong { color: var(--frost-blue); font-family: 'Orbitron', sans-serif; font-size: 20px; text-shadow: 0 0 10px rgba(0,240,255,0.5); }
-
-.submit-button {
-    width: 100%;
-    padding: 14px;
-    font-size: 12px;
-    margin-top: 10px;
-}
-
-.order-result {
-    display: none;
-    margin-top: 15px;
-    padding: 12px;
-    border: 1px solid rgba(0, 240, 255, 0.4);
-    border-radius: 10px;
-    background: rgba(0, 240, 255, 0.05);
-}
-
-.order-result.show { display: block; }
-.order-result p { font-size: 11px; color: #e2e8f0; line-height: 1.7; white-space: pre-wrap; }
-
-.copy-button {
-    margin-top: 10px;
-    width: 100%;
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid rgba(0, 240, 255, 0.4);
-    background: rgba(0, 240, 255, 0.1);
-    color: var(--frost-blue);
-    font-weight: 800;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.copy-button:hover { background: rgba(0, 240, 255, 0.25); box-shadow: 0 0 12px rgba(0,240,255,0.4); }
-
-.notice {
-    margin-top: 12px;
-    color: #64748b;
-    font-size: 10px;
-    line-height: 1.6;
-}
-
-/* СИСТЕМА АВАТАРОК FORTNITE */
-.profile-avatar-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 15px;
-}
-
-.profile-avatar-wrapper {
-    position: relative;
-    width: 85px;
-    height: 85px;
-    border-radius: 50%;
-    overflow: hidden;
-    border: 3px solid var(--frost-blue);
-    box-shadow: 0 0 25px rgba(0, 240, 255, 0.6);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #020617;
-}
-
-.profile-avatar-wrapper img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.avatar-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 10px;
-    margin-top: 12px;
-    padding: 5px;
-}
-
-.avatar-item {
-    width: 52px;
-    height: 52px;
-    border-radius: 50%;
-    overflow: hidden;
-    cursor: pointer;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #020617;
-}
-
-.avatar-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.avatar-item:hover {
-    transform: scale(1.15) rotate(3deg);
-    border-color: #ffffff;
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
-}
-
-.avatar-item.selected {
-    border-color: var(--frost-blue);
-    box-shadow: 0 0 18px var(--frost-blue);
-    transform: scale(1.1);
-}
-
-/* === АНИМИРОВАННЫЙ БЕЛО-БИРЮЗОВЫЙ ВИДЖЕТ ПОДДЕРЖКИ 24/7 С АВТО-НЕЙРОБОТОМ === */
-.ai-support-widget {
-    position: fixed;
-    bottom: 25px;
-    left: 25px;
-    z-index: 999;
-    font-family: 'Montserrat', sans-serif;
-}
-
-.ai-support-toggle {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 20px;
-    background: linear-gradient(135deg, #ffffff, #e0f7fa, #00f0ff);
-    border: 2px solid #ffffff;
-    border-radius: 35px;
-    color: #020617;
-    font-size: 13px;
-    font-weight: 800;
-    cursor: pointer;
-    box-shadow: 0 10px 25px rgba(0, 240, 255, 0.4), 0 0 15px rgba(255, 255, 255, 0.8);
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    animation: pulseSupportBtn 3s infinite ease-in-out;
-}
-
-@keyframes pulseSupportBtn {
-    0%, 100% { transform: translateY(0) scale(1); box-shadow: 0 8px 25px rgba(0, 240, 255, 0.4), 0 0 15px rgba(255, 255, 255, 0.6); }
-    50% { transform: translateY(-4px) scale(1.03); box-shadow: 0 15px 35px rgba(0, 240, 255, 0.7), 0 0 25px rgba(255, 255, 255, 0.9); }
-}
-
-.ai-support-toggle:hover {
-    transform: translateY(-5px) scale(1.05);
-    background: linear-gradient(135deg, #ffffff, #b2ebf2, #00f0ff);
-}
-
-.ai-support-toggle-icon {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background: #020617;
-    color: #00f0ff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    box-shadow: 0 0 10px rgba(0, 240, 255, 0.8);
-}
-
-.ai-status-dot {
-    width: 9px;
-    height: 9px;
-    background: #10b981;
-    border-radius: 50%;
-    box-shadow: 0 0 8px #10b981;
-    animation: statusBlink 1.5s infinite alternate;
-}
-
-@keyframes statusBlink {
-    0% { opacity: 0.4; }
-    100% { opacity: 1; transform: scale(1.2); }
-}
-
-/* Окно чата */
-.ai-chat-window {
-    display: none;
-    position: absolute;
-    bottom: 60px;
-    left: 0;
-    width: 360px;
-    height: 490px;
-    background: rgba(10, 25, 41, 0.95);
-    border: 2px solid #00f0ff;
-    border-radius: 24px;
-    box-shadow: 0 20px 50px rgba(0, 240, 255, 0.35), 0 0 30px rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(20px);
-    flex-direction: column;
-    overflow: hidden;
-    animation: chatWindowPop 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-}
-
-@keyframes chatWindowPop {
-    0% { opacity: 0; transform: scale(0.85) translateY(20px); }
-    100% { opacity: 1; transform: scale(1) translateY(0); }
-}
-
-.ai-chat-window.active { display: flex; }
-
-/* Шапка чата */
-.ai-chat-header {
-    padding: 14px 18px;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(0, 240, 255, 0.25));
-    border-bottom: 1px solid rgba(0, 240, 255, 0.4);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.ai-chat-title-wrap {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.ai-chat-avatar {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #ffffff, #00f0ff);
-    color: #020617;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-    font-weight: 900;
-    box-shadow: 0 0 12px #00f0ff;
-}
-
-.ai-chat-info h4 {
-    font-size: 13px;
-    font-weight: 800;
-    color: #ffffff;
-    letter-spacing: 0.5px;
-}
-
-.ai-chat-info p {
-    font-size: 10px;
-    color: #a5f3fc;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.ai-chat-controls {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.lang-switch-btn {
-    background: rgba(255, 255, 255, 0.15);
-    border: 1px solid rgba(0, 240, 255, 0.6);
-    color: #ffffff;
-    font-size: 10px;
-    font-weight: 800;
-    padding: 4px 8px;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.lang-switch-btn:hover {
-    background: #00f0ff;
-    color: #020617;
-    box-shadow: 0 0 10px #00f0ff;
-}
-
-.ai-chat-close {
-    background: none;
-    border: none;
-    color: #e0f2fe;
-    font-size: 22px;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.ai-chat-close:hover { color: #ffffff; transform: scale(1.15); }
-
-/* Тело сообщений */
-.ai-chat-body {
-    flex: 1;
-    padding: 15px;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    background: rgba(2, 6, 23, 0.6);
-}
-
-.ai-chat-body::-webkit-scrollbar {
-    width: 5px;
-}
-
-.ai-chat-body::-webkit-scrollbar-thumb {
-    background: rgba(0, 240, 255, 0.4);
-    border-radius: 10px;
-}
-
-.chat-msg {
-    max-width: 85%;
-    padding: 10px 14px;
-    border-radius: 16px;
-    font-size: 12px;
-    line-height: 1.5;
-    animation: msgFadeIn 0.3s ease;
-}
-
-@keyframes msgFadeIn {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.chat-msg.bot {
-    align-self: flex-start;
-    background: rgba(255, 255, 255, 0.12);
-    border: 1px solid rgba(0, 240, 255, 0.4);
-    color: #e0f2fe;
-    border-bottom-left-radius: 4px;
-}
-
-.chat-msg.user {
-    align-self: flex-end;
-    background: linear-gradient(135deg, #00f0ff, #0284c7);
-    color: #ffffff;
-    font-weight: 600;
-    border-bottom-right-radius: 4px;
-    box-shadow: 0 0 12px rgba(0, 240, 255, 0.3);
-}
-
-/* Акцентная кнопка промокода от бота */
-.promo-action-btn {
-    display: inline-block;
-    margin-top: 8px;
-    padding: 8px 18px;
-    background: linear-gradient(135deg, #00f0ff, #a855f7);
-    color: #ffffff !important;
-    font-weight: 900;
-    font-size: 11px;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    box-shadow: 0 0 15px rgba(0, 240, 255, 0.6);
-    transition: all 0.3s ease;
-    text-decoration: none;
-}
-
-.promo-action-btn:hover {
-    transform: scale(1.05) translateY(-2px);
-    box-shadow: 0 0 22px rgba(0, 240, 255, 0.9);
-}
-
-.tg-link-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    margin-top: 8px;
-    padding: 8px 14px;
-    background: #0088cc;
-    color: #ffffff !important;
-    font-weight: 800;
-    font-size: 11px;
-    border-radius: 12px;
-    text-decoration: none;
-    box-shadow: 0 0 12px rgba(0, 136, 204, 0.6);
-    transition: 0.3s;
-}
-
-.tg-link-btn:hover {
-    background: #00a8ff;
-    box-shadow: 0 0 20px rgba(0, 168, 255, 0.9);
-    transform: translateY(-2px);
-}
-
-/* Быстрые подсказки вопросов */
-.ai-quick-questions {
-    padding: 8px 12px;
-    display: flex;
-    gap: 6px;
-    overflow-x: auto;
-    background: rgba(10, 25, 41, 0.8);
-    border-top: 1px solid rgba(0, 240, 255, 0.2);
-}
-
-.ai-quick-questions::-webkit-scrollbar { display: none; }
-
-.quick-q-btn {
-    white-space: nowrap;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(0, 240, 255, 0.35);
-    color: #bae6fd;
-    padding: 6px 12px;
-    border-radius: 15px;
-    font-size: 10px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.quick-q-btn:hover {
-    background: rgba(0, 240, 255, 0.25);
-    color: #ffffff;
-    border-color: #00f0ff;
-    box-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
-}
-
-/* Форма ввода */
-.ai-chat-input-area {
-    padding: 12px;
-    background: rgba(15, 23, 42, 0.9);
-    border-top: 1px solid rgba(0, 240, 255, 0.3);
-    display: flex;
-    gap: 8px;
-}
-
-.ai-chat-input {
-    flex: 1;
-    background: #020617;
-    border: 1px solid rgba(0, 240, 255, 0.4);
-    border-radius: 20px;
-    padding: 9px 15px;
-    color: #ffffff;
-    font-size: 11px;
-    outline: none;
-    transition: 0.3s;
-}
-
-.ai-chat-input:focus {
-    border-color: #00f0ff;
-    box-shadow: 0 0 12px rgba(0, 240, 255, 0.4);
-}
-
-.ai-chat-send-btn {
-    background: linear-gradient(135deg, #ffffff, #00f0ff);
-    border: none;
-    border-radius: 50%;
-    width: 36px;
-    height: 36px;
-    color: #020617;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    cursor: pointer;
-    transition: 0.3s;
-    box-shadow: 0 0 12px rgba(0, 240, 255, 0.5);
-}
-
-.ai-chat-send-btn:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 18px rgba(0, 240, 255, 0.8);
-}
-
-/* Анимация набора текста нейроботом */
-.typing-indicator {
-    display: flex;
-    gap: 4px;
-    align-items: center;
-    padding: 6px 10px;
-}
-
-.typing-indicator span {
-    width: 6px;
-    height: 6px;
-    background: #00f0ff;
-    border-radius: 50%;
-    animation: typingBounce 1.2s infinite ease-in-out;
-}
-
-.typing-indicator span:nth-child(1) { animation-delay: 0s; }
-.typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
-.typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
-
-@keyframes typingBounce {
-    0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
-    40% { transform: scale(1.2); opacity: 1; box-shadow: 0 0 8px #00f0ff; }
-}
-
-@media(max-width:1100px) {
-    .products { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .benefits { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
-
-@media(max-width:680px) {
-    .products { grid-template-columns: 1fr; }
-    .benefits { grid-template-columns: 1fr; }
-    header { justify-content: center; text-align: center; }
-    nav { justify-content: center; }
-    .ai-chat-window { width: calc(100vw - 30px); left: -10px; }
-}
-</style>
-</head>
-
-<body>
-<div class="garland">
-    <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-    <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+Вот обновленный код вашего магазина. Я заменил изображения-заглушки (с фильтрами `hue-rotate`) на оригинальные фотографии обложек из Epic Games Store для **Набора «Искусный взлом» (Mainframe Break Pack)** и **Набора заданий «Бинты и уши» (Bunny Mummy Quest Pack)**.
+
+Также я добавил надежный механизм `onerror` в теги `<img>`: поскольку Epic Games иногда меняет хэши изображений на своих серверах, если оригинальная обложка вдруг станет недоступна, сайт автоматически, без ошибок, вернет красивую заглушку, чтобы дизайн не сломался.
+
+```html
+<!DOCTYPE html><html lang="ru"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>DESAIT STORE — Новогодний Сезон 🎄❄️</title> <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Orbitron:wght@600;700;800;900&display=swap" rel="stylesheet"><style> :root { --bg-deep: #020617; --frost-blue: #00f0ff; --ice-purple: #a855f7; --neon-pink: #ec4899; --snow-white: #f8fafc; --card-bg: rgba(15, 23, 42, 0.85); --border-frost: rgba(0, 240, 255, 0.4); } * { margin: 0; padding: 0; box-sizing: border-box; } html { scroll-behavior: smooth; scroll-padding-top: 120px; } body { min-height: 100vh; overflow-x: hidden; background: var(--bg-deep); color: var(--snow-white); font-family: 'Montserrat', sans-serif; } /* === СВЕТЯЩАЯСЯ ГИРЛЯНДА === */ .garland { position: fixed; top: 0; left: 0; width: 100%; height: 18px; z-index: 1000; display: flex; justify-content: space-around; pointer-events: none; background: rgba(2, 6, 23, 0.75); backdrop-filter: blur(8px); border-bottom: 1px solid rgba(0, 240, 255, 0.2); } .garland span { display: inline-block; width: 12px; height: 12px; border-radius: 50%; animation: garlandGlow 1.4s infinite alternate ease-in-out; } .garland span:nth-child(5n+1) { background: #00f0ff; box-shadow: 0 0 16px #00f0ff, 0 0 30px #00f0ff; animation-delay: 0.1s; } .garland span:nth-child(5n+2) { background: #ec4899; box-shadow: 0 0 16px #ec4899, 0 0 30px #ec4899; animation-delay: 0.4s; } .garland span:nth-child(5n+3) { background: #a855f7; box-shadow: 0 0 16px #a855f7, 0 0 30px #a855f7; animation-delay: 0.7s; } .garland span:nth-child(5n+4) { background: #38bdf8; box-shadow: 0 0 16px #38bdf8, 0 0 30px #38bdf8; animation-delay: 0.3s; } .garland span:nth-child(5n+5) { background: #ffffff; box-shadow: 0 0 16px #ffffff, 0 0 30px #ffffff; animation-delay: 0.9s; } @keyframes garlandGlow { 0% { opacity: 0.3; transform: scale(0.7); filter: brightness(0.5); } 100% { opacity: 1; transform: scale(1.3); filter: brightness(1.5); } } .background { position: fixed; inset: 0; z-index: -3; background: radial-gradient(circle at 15% 20%, rgba(0, 240, 255, 0.25), transparent 45%), radial-gradient(circle at 85% 80%, rgba(168, 85, 247, 0.25), transparent 45%), radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.15), transparent 50%), #020617; background-size: 250% 250%; animation: pulseIridescentBg 12s ease-in-out infinite alternate; } @keyframes pulseIridescentBg { 0% { background-position: 0% 0%; filter: hue-rotate(0deg) brightness(1); } 50% { background-position: 100% 50%; filter: hue-rotate(25deg) brightness(1.15); } 100% { background-position: 50% 100%; filter: hue-rotate(-15deg) brightness(1); } } .snow-canvas { position: fixed; inset: 0; z-index: -1; pointer-events: none; } /* === ПЕРСОНАЖИ НА ЗАДНЕМ ПЛАНЕ === */ .background-skin { position: fixed; bottom: -5vh; z-index: -2; pointer-events: none; height: 75vh; max-height: 800px; width: auto; opacity: 0.35; filter: drop-shadow(0 0 25px rgba(0, 240, 255, 0.5)); } .skin-left { left: -5vw; animation: floatSkinLeft 8s ease-in-out infinite; } .skin-right { right: -5vw; filter: drop-shadow(0 0 25px rgba(236, 72, 153, 0.5)); animation: floatSkinRight 8s ease-in-out infinite; animation-delay: -4s; } @keyframes floatSkinLeft { 0%, 100% { transform: translateY(0) rotate(2deg); } 50% { transform: translateY(-30px) rotate(-2deg); } } @keyframes floatSkinRight { 0%, 100% { transform: scaleX(-1) translateY(0) rotate(2deg); } 50% { transform: scaleX(-1) translateY(-30px) rotate(-2deg); } } @media(max-width: 1300px) { .background-skin { height: 60vh; } } @media(max-width: 950px) { .background-skin { opacity: 0.2; } } @media(max-width: 680px) { .background-skin { display: none; } } header { position: sticky; top: 25px; z-index: 100; margin: 15px 3%; padding: 18px 32px; display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; background: rgba(15, 23, 42, 0.85); border: 1px solid var(--border-frost); border-radius: 20px; backdrop-filter: blur(20px); box-shadow: 0 10px 40px rgba(0, 240, 255, 0.15); } .logo { font-family: 'Orbitron', sans-serif; font-size: 24px; font-weight: 900; text-decoration: none; color: white; text-shadow: 0 0 20px var(--frost-blue); } .logo span { color: var(--frost-blue); } nav { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; } nav a { color: #cbd5e1; text-decoration: none; font-size: 14px; font-weight: 700; transition: 0.3s; } nav a:hover { color: var(--frost-blue); text-shadow: 0 0 12px var(--frost-blue); } button { font-family: inherit; cursor: pointer; } .header-button, .primary-button, .buy-button, .submit-button, .logout-button { position: relative; overflow: hidden; color: white; background: linear-gradient(135deg, #00f0ff, #7c3aed); border: 1px solid rgba(255, 255, 255, 0.5); border-radius: 14px; font-weight: 900; box-shadow: 0 0 20px rgba(0, 240, 255, 0.35); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); } .header-button::before, .primary-button::before, .buy-button::before, .submit-button::before, .logout-button::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent); transition: 0.5s; } .header-button:hover::before, .primary-button:hover::before, .buy-button:hover::before, .submit-button:hover::before, .logout-button:hover::before { left: 100%; } .header-button { padding: 13px 24px; font-size: 14px; } .header-button:hover, .buy-button:hover, .primary-button:hover, .submit-button:hover, .logout-button:hover { transform: translateY(-4px) scale(1.04); box-shadow: 0 0 35px #00f0ff, 0 0 15px #a855f7; border-color: #fff; } .header-profile-btn { display: flex; align-items: center; gap: 12px; padding: 8px 22px 8px 10px; border-radius: 40px; background: rgba(15, 23, 42, 0.75) !important; border: 1px solid rgba(0, 240, 255, 0.6) !important; backdrop-filter: blur(12px); box-shadow: 0 0 20px rgba(0, 240, 255, 0.3), inset 0 0 12px rgba(0, 240, 255, 0.15); font-size: 14px; font-weight: 800; color: #fff; } .header-profile-btn:hover { background: rgba(0, 240, 255, 0.15) !important; border-color: #00f0ff !important; box-shadow: 0 0 30px rgba(0, 240, 255, 0.6), inset 0 0 20px rgba(0, 240, 255, 0.3); } .header-profile-btn img { width: 34px; height: 34px; border-radius: 50%; object-fit: cover; border: 2px solid var(--frost-blue); box-shadow: 0 0 12px var(--frost-blue); transition: transform 0.3s; } .header-profile-btn:hover img { transform: scale(1.1) rotate(5deg); } .logout-button { background: linear-gradient(135deg, #ef4444, #ec4899); width: 100%; padding: 12px; margin-top: 15px; font-size: 12px; } .hero { min-height: 520px; padding: 65px 6%; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; position: relative; overflow: hidden; border: 1px solid rgba(0, 240, 255, 0.35); border-radius: 24px; margin: 20px 3%; box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 30px rgba(0, 240, 255, 0.2); } .hero-bg-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; opacity: 0.3; filter: brightness(0.85) contrast(1.1); } .hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(2, 6, 23, 0.92) 0%, rgba(2, 6, 23, 0.7) 55%, rgba(2, 6, 23, 0.35) 100%); z-index: 1; pointer-events: none; } .hero-content { position: relative; z-index: 2; } .hero-label { padding: 8px 18px; border: 1px solid var(--frost-blue); background: rgba(0, 240, 255, 0.15); color: #bae6fd; border-radius: 30px; font-size: 11px; font-weight: 900; letter-spacing: 2px; margin-bottom: 18px; box-shadow: 0 0 20px rgba(0, 240, 255, 0.3); backdrop-filter: blur(5px); display: inline-block; } .hero h1 { font-family: 'Orbitron', sans-serif; font-size: clamp(38px, 7vw, 75px); font-weight: 900; line-height: 1.1; text-shadow: 0 0 35px rgba(0, 240, 255, 0.6); } .hero h1 span { background: linear-gradient(90deg, #fff, #38bdf8, #ec4899); color: transparent; background-clip: text; -webkit-background-clip: text; } .hero p { max-width: 520px; margin-top: 15px; color: #cbd5e1; line-height: 1.7; font-size: 14px; text-shadow: 0 2px 10px rgba(0,0,0,0.8); } .hero-buttons { display: flex; gap: 15px; flex-wrap: wrap; margin-top: 28px; } .primary-button, .secondary-button { display: inline-flex; align-items: center; justify-content: center; padding: 14px 26px; border-radius: 12px; font-size: 13px; font-weight: 900; text-decoration: none; } .secondary-button { color: white; border: 1px solid rgba(168, 85, 247, 0.6); background: rgba(15, 23, 42, 0.8); box-shadow: 0 0 20px rgba(168, 85, 247, 0.25); transition: 0.3s; backdrop-filter: blur(5px); } .secondary-button:hover { border-color: var(--frost-blue); box-shadow: 0 0 30px rgba(0, 240, 255, 0.5); transform: translateY(-3px); } .section { max-width: 1400px; padding: 40px 5%; margin: auto; } .section-heading { margin-bottom: 25px; } .section-tag { color: var(--frost-blue); font-size: 11px; font-weight: 900; letter-spacing: 2px; } .section-heading h2 { font-family: 'Orbitron', sans-serif; font-size: clamp(24px, 3.5vw, 34px); margin-top: 5px; text-shadow: 0 0 12px rgba(0, 240, 255, 0.4); } .section-heading p { color: #94a3b8; font-size: 13px; margin-top: 5px; } .sub-category-title { font-family: 'Orbitron', sans-serif; font-size: 18px; color: var(--snow-white); margin: 30px 0 15px; display: flex; align-items: center; gap: 10px; text-shadow: 0 0 10px rgba(0, 240, 255, 0.3); } .sub-category-title::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, rgba(0, 240, 255, 0.3), transparent); } .products { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; } .product-card { overflow: hidden; background: var(--card-bg); border: 1px solid var(--border-frost); border-radius: 20px; transition: 0.4s ease; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6); position: relative; backdrop-filter: blur(10px); } .discount-badge { position: absolute; top: 12px; left: 12px; z-index: 5; background: linear-gradient(135deg, #ef4444, #ec4899); color: white; padding: 6px 12px; font-size: 10px; font-weight: 900; border-radius: 8px; box-shadow: 0 0 15px rgba(239, 68, 68, 0.7); letter-spacing: 1px; animation: badgePulse 2s infinite alternate; } .best-deal-badge { position: absolute; top: 12px; right: 12px; z-index: 5; background: linear-gradient(135deg, #a855f7, #6366f1); color: white; padding: 6px 12px; font-size: 10px; font-weight: 900; border-radius: 8px; box-shadow: 0 0 15px rgba(168, 85, 247, 0.8); letter-spacing: 1px; } @keyframes badgePulse { 0% { transform: scale(1); box-shadow: 0 0 10px rgba(239, 68, 68, 0.5); } 100% { transform: scale(1.05); box-shadow: 0 0 20px rgba(239, 68, 68, 0.9); } } .product-card:hover { transform: translateY(-8px) scale(1.015); border-color: var(--frost-blue); box-shadow: 0 20px 40px rgba(0, 240, 255, 0.3); } .product-image { height: 185px; overflow: hidden; background: radial-gradient(circle, #1e293b, #020617); border-bottom: 1px solid var(--border-frost); position: relative; } .product-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; } .product-card:hover .product-image img { transform: scale(1.08) rotate(1deg); } .product-content { padding: 18px; } .product-category { color: #c084fc; font-size: 10px; font-weight: 900; letter-spacing: 1.5px; } .product-content h3 { margin-top: 8px; font-family: 'Orbitron', sans-serif; font-size: 15px; font-weight: 800; color: white; text-shadow: 0 0 10px rgba(0, 240, 255, 0.3); } .product-description { min-height: 45px; margin-top: 8px; color: #94a3b8; font-size: 11px; line-height: 1.6; } .price-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 15px; padding-top: 12px; border-top: 1px solid rgba(255, 255, 255, 0.1); } .card-price-wrap { display: flex; flex-direction: column; } .old-price { font-size: 10px; color: #64748b; text-decoration: line-through; } .card-price { font-family: 'Orbitron', sans-serif; font-size: 16px; font-weight: 900; color: var(--frost-blue); text-shadow: 0 0 12px rgba(0, 240, 255, 0.5); } .buy-button { padding: 10px 14px; font-size: 10px; } .premium-prices { display: grid; gap: 8px; margin-top: 15px; } .premium-price { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 12px; border: 1px solid rgba(0, 240, 255, 0.25); border-radius: 10px; background: rgba(2, 6, 23, 0.6); transition: 0.2s; } .premium-price:hover { border-color: var(--frost-blue); background: rgba(0, 240, 255, 0.05); } .premium-price span { font-size: 11px; color: #cbd5e1; } .premium-price strong { font-family: 'Orbitron', sans-serif; font-size: 12px; color: var(--frost-blue); white-space: nowrap; } .benefits { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; margin-top: 25px; } .benefit { padding: 25px; border: 1px solid var(--border-frost); background: var(--card-bg); border-radius: 18px; transition: 0.3s; backdrop-filter: blur(10px); } .benefit:hover { border-color: #a855f7; transform: translateY(-5px); box-shadow: 0 15px 35px rgba(168, 85, 247, 0.25); } .benefit-icon { font-size: 32px; margin-bottom: 15px; filter: drop-shadow(0 0 15px #00f0ff); } .benefit h3 { font-size: 15px; margin-bottom: 8px; font-family: 'Orbitron', sans-serif; } .benefit p { color: #94a3b8; font-size: 12px; line-height: 1.7; } footer { margin: 40px 3% 20px; padding: 25px; display: flex; justify-content: space-between; align-items: center; gap: 15px; flex-wrap: wrap; border: 1px solid var(--border-frost); border-radius: 20px; background: var(--card-bg); color: #94a3b8; font-size: 11px; backdrop-filter: blur(10px); } footer strong { color: white; font-family: 'Orbitron', sans-serif; } .modal { display: none; position: fixed; inset: 0; z-index: 2000; align-items: center; justify-content: center; padding: 20px; background: rgba(2, 6, 23, 0.85); backdrop-filter: blur(15px); } .modal.active { display: flex; } .modal-content { position: relative; width: 100%; max-width: 440px; padding: 30px; background: #0f172a; border: 1px solid var(--frost-blue); border-radius: 22px; box-shadow: 0 0 60px rgba(0, 240, 255, 0.35); } .modal-close { position: absolute; top: 12px; right: 16px; background: none; border: none; color: #94a3b8; font-size: 28px; cursor: pointer; transition: 0.2s; } .modal-close:hover { color: #fff; transform: scale(1.1); } .modal-content h2 { font-family: 'Orbitron', sans-serif; font-size: 20px; margin-bottom: 8px; color: white; } .modal-subtitle { color: #94a3b8; font-size: 12px; line-height: 1.6; margin-bottom: 20px; } .form-label { display: block; color: #38bdf8; font-size: 11px; font-weight: 900; margin: 15px 0 6px; } .form-control { width: 100%; padding: 12px; border: 1px solid rgba(0, 240, 255, 0.3); border-radius: 10px; background: #020617; color: white; outline: none; font-family: inherit; font-size: 12px; transition: 0.3s; } .form-control:focus { border-color: var(--frost-blue); box-shadow: 0 0 15px rgba(0, 240, 255, 0.4); } .total-row { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; margin-top: 15px; border-top: 1px solid rgba(255, 255, 255, 0.1); } .total-row span { color: #94a3b8; font-size: 12px; } .total-row strong { color: var(--frost-blue); font-family: 'Orbitron', sans-serif; font-size: 20px; text-shadow: 0 0 10px rgba(0,240,255,0.5); } .submit-button { width: 100%; padding: 14px; font-size: 12px; margin-top: 10px; } .order-result { display: none; margin-top: 15px; padding: 12px; border: 1px solid rgba(0, 240, 255, 0.4); border-radius: 10px; background: rgba(0, 240, 255, 0.05); } .order-result.show { display: block; } .order-result p { font-size: 11px; color: #e2e8f0; line-height: 1.7; white-space: pre-wrap; } .copy-button { margin-top: 10px; width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(0, 240, 255, 0.4); background: rgba(0, 240, 255, 0.1); color: var(--frost-blue); font-weight: 800; cursor: pointer; transition: 0.3s; } .copy-button:hover { background: rgba(0, 240, 255, 0.25); box-shadow: 0 0 12px rgba(0,240,255,0.4); } .notice { margin-top: 12px; color: #64748b; font-size: 10px; line-height: 1.6; } /* === КНОПКА GOOGLE И РАЗДЕЛИТЕЛЬ === */ .auth-divider { display: flex; align-items: center; text-align: center; margin: 20px 0 15px; color: #64748b; font-size: 10px; font-weight: 800; letter-spacing: 1px; } .auth-divider::before, .auth-divider::after { content: ''; flex: 1; border-bottom: 1px solid rgba(0, 240, 255, 0.2); } .auth-divider span { padding: 0 12px; } .google-auth-btn { display: flex; align-items: center; justify-content: center; gap: 12px; width: 100%; padding: 12px; background: #ffffff; color: #020617; border: none; border-radius: 10px; font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 800; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 0 15px rgba(255, 255, 255, 0.1); } .google-auth-btn:hover { transform: translateY(-2px); background: #f8fafc; box-shadow: 0 5px 20px rgba(255, 255, 255, 0.3); } /* СИСТЕМА АВАТАРОК FORTNITE */ .profile-avatar-container { display: flex; flex-direction: column; align-items: center; margin-bottom: 15px; } .profile-avatar-wrapper { position: relative; width: 85px; height: 85px; border-radius: 50%; overflow: hidden; border: 3px solid var(--frost-blue); box-shadow: 0 0 25px rgba(0, 240, 255, 0.6); display: flex; align-items: center; justify-content: center; background: #020617; } .profile-avatar-wrapper img { width: 100%; height: 100%; object-fit: cover; } .avatar-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 12px; padding: 5px; } .avatar-item { width: 52px; height: 52px; border-radius: 50%; overflow: hidden; cursor: pointer; border: 2px solid rgba(255, 255, 255, 0.3); transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; background: #020617; } .avatar-item img { width: 100%; height: 100%; object-fit: cover; } .avatar-item:hover { transform: scale(1.15) rotate(3deg); border-color: #ffffff; box-shadow: 0 0 15px rgba(255, 255, 255, 0.8); } .avatar-item.selected { border-color: var(--frost-blue); box-shadow: 0 0 18px var(--frost-blue); transform: scale(1.1); } /* === АНИМИРОВАННЫЙ БЕЛО-БИРЮЗОВЫЙ ВИДЖЕТ ПОДДЕРЖКИ 24/7 === */ .ai-support-widget { position: fixed; bottom: 25px; left: 25px; z-index: 999; font-family: 'Montserrat', sans-serif; } .ai-support-toggle { display: flex; align-items: center; gap: 12px; padding: 12px 20px; background: linear-gradient(135deg, #ffffff, #e0f7fa, #00f0ff); border: 2px solid #ffffff; border-radius: 35px; color: #020617; font-size: 13px; font-weight: 800; cursor: pointer; box-shadow: 0 10px 25px rgba(0, 240, 255, 0.4), 0 0 15px rgba(255, 255, 255, 0.8); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); animation: pulseSupportBtn 3s infinite ease-in-out; } @keyframes pulseSupportBtn { 0%, 100% { transform: translateY(0) scale(1); box-shadow: 0 8px 25px rgba(0, 240, 255, 0.4), 0 0 15px rgba(255, 255, 255, 0.6); } 50% { transform: translateY(-4px) scale(1.03); box-shadow: 0 15px 35px rgba(0, 240, 255, 0.7), 0 0 25px rgba(255, 255, 255, 0.9); } } .ai-support-toggle:hover { transform: translateY(-5px) scale(1.05); background: linear-gradient(135deg, #ffffff, #b2ebf2, #00f0ff); } .ai-support-toggle-icon { width: 32px; height: 32px; border-radius: 50%; background: #020617; color: #00f0ff; display: flex; align-items: center; justify-content: center; font-size: 16px; box-shadow: 0 0 10px rgba(0, 240, 255, 0.8); } .ai-status-dot { width: 9px; height: 9px; background: #10b981; border-radius: 50%; box-shadow: 0 0 8px #10b981; animation: statusBlink 1.5s infinite alternate; } @keyframes statusBlink { 0% { opacity: 0.4; } 100% { opacity: 1; transform: scale(1.2); } } /* Окно чата */ .ai-chat-window { display: none; position: absolute; bottom: 60px; left: 0; width: 360px; height: 490px; background: rgba(10, 25, 41, 0.95); border: 2px solid #00f0ff; border-radius: 24px; box-shadow: 0 20px 50px rgba(0, 240, 255, 0.35), 0 0 30px rgba(255, 255, 255, 0.2); backdrop-filter: blur(20px); flex-direction: column; overflow: hidden; animation: chatWindowPop 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; } @keyframes chatWindowPop { 0% { opacity: 0; transform: scale(0.85) translateY(20px); } 100% { opacity: 1; transform: scale(1) translateY(0); } } .ai-chat-window.active { display: flex; } .ai-chat-header { padding: 14px 18px; background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(0, 240, 255, 0.25)); border-bottom: 1px solid rgba(0, 240, 255, 0.4); display: flex; align-items: center; justify-content: space-between; } .ai-chat-title-wrap { display: flex; align-items: center; gap: 10px; } .ai-chat-avatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #ffffff, #00f0ff); color: #020617; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 900; box-shadow: 0 0 12px #00f0ff; } .ai-chat-info h4 { font-size: 13px; font-weight: 800; color: #ffffff; letter-spacing: 0.5px; } .ai-chat-info p { font-size: 10px; color: #a5f3fc; display: flex; align-items: center; gap: 5px; } .ai-chat-controls { display: flex; align-items: center; gap: 8px; } .lang-switch-btn { background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(0, 240, 255, 0.6); color: #ffffff; font-size: 10px; font-weight: 800; padding: 4px 8px; border-radius: 12px; cursor: pointer; transition: 0.3s; } .lang-switch-btn:hover { background: #00f0ff; color: #020617; box-shadow: 0 0 10px #00f0ff; } .ai-chat-close { background: none; border: none; color: #e0f2fe; font-size: 22px; cursor: pointer; transition: 0.2s; } .ai-chat-close:hover { color: #ffffff; transform: scale(1.15); } .ai-chat-body { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; background: rgba(2, 6, 23, 0.6); } .ai-chat-body::-webkit-scrollbar { width: 5px; } .ai-chat-body::-webkit-scrollbar-thumb { background: rgba(0, 240, 255, 0.4); border-radius: 10px; } .chat-msg { max-width: 85%; padding: 10px 14px; border-radius: 16px; font-size: 12px; line-height: 1.5; animation: msgFadeIn 0.3s ease; } @keyframes msgFadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } } .chat-msg.bot { align-self: flex-start; background: rgba(255, 255, 255, 0.12); border: 1px solid rgba(0, 240, 255, 0.4); color: #e0f2fe; border-bottom-left-radius: 4px; } .chat-msg.user { align-self: flex-end; background: linear-gradient(135deg, #00f0ff, #0284c7); color: #ffffff; font-weight: 600; border-bottom-right-radius: 4px; box-shadow: 0 0 12px rgba(0, 240, 255, 0.3); } .promo-action-btn { display: inline-block; margin-top: 8px; padding: 8px 18px; background: linear-gradient(135deg, #00f0ff, #a855f7); color: #ffffff !important; font-weight: 900; font-size: 11px; border: none; border-radius: 20px; cursor: pointer; box-shadow: 0 0 15px rgba(0, 240, 255, 0.6); transition: all 0.3s ease; text-decoration: none; } .promo-action-btn:hover { transform: scale(1.05) translateY(-2px); box-shadow: 0 0 22px rgba(0, 240, 255, 0.9); } .tg-link-btn { display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; padding: 8px 14px; background: #0088cc; color: #ffffff !important; font-weight: 800; font-size: 11px; border-radius: 12px; text-decoration: none; box-shadow: 0 0 12px rgba(0, 136, 204, 0.6); transition: 0.3s; } .tg-link-btn:hover { background: #00a8ff; box-shadow: 0 0 20px rgba(0, 168, 255, 0.9); transform: translateY(-2px); } .ai-quick-questions { padding: 8px 12px; display: flex; gap: 6px; overflow-x: auto; background: rgba(10, 25, 41, 0.8); border-top: 1px solid rgba(0, 240, 255, 0.2); } .ai-quick-questions::-webkit-scrollbar { display: none; } .quick-q-btn { white-space: nowrap; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(0, 240, 255, 0.35); color: #bae6fd; padding: 6px 12px; border-radius: 15px; font-size: 10px; font-weight: 700; cursor: pointer; transition: 0.3s; } .quick-q-btn:hover { background: rgba(0, 240, 255, 0.25); color: #ffffff; border-color: #00f0ff; box-shadow: 0 0 10px rgba(0, 240, 255, 0.4); } .ai-chat-input-area { padding: 12px; background: rgba(15, 23, 42, 0.9); border-top: 1px solid rgba(0, 240, 255, 0.3); display: flex; gap: 8px; } .ai-chat-input { flex: 1; background: #020617; border: 1px solid rgba(0, 240, 255, 0.4); border-radius: 20px; padding: 9px 15px; color: #ffffff; font-size: 11px; outline: none; transition: 0.3s; } .ai-chat-input:focus { border-color: #00f0ff; box-shadow: 0 0 12px rgba(0, 240, 255, 0.4); } .ai-chat-send-btn { background: linear-gradient(135deg, #ffffff, #00f0ff); border: none; border-radius: 50%; width: 36px; height: 36px; color: #020617; display: flex; align-items: center; justify-content: center; font-size: 14px; cursor: pointer; transition: 0.3s; box-shadow: 0 0 12px rgba(0, 240, 255, 0.5); } .ai-chat-send-btn:hover { transform: scale(1.1); box-shadow: 0 0 18px rgba(0, 240, 255, 0.8); } .typing-indicator { display: flex; gap: 4px; align-items: center; padding: 6px 10px; } .typing-indicator span { width: 6px; height: 6px; background: #00f0ff; border-radius: 50%; animation: typingBounce 1.2s infinite ease-in-out; } .typing-indicator span:nth-child(1) { animation-delay: 0s; } .typing-indicator span:nth-child(2) { animation-delay: 0.2s; } .typing-indicator span:nth-child(3) { animation-delay: 0.4s; } @keyframes typingBounce { 0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; } 40% { transform: scale(1.2); opacity: 1; box-shadow: 0 0 8px #00f0ff; } } @media(max-width:1100px) { .products { grid-template-columns: repeat(2, minmax(0, 1fr)); } .benefits { grid-template-columns: repeat(2, minmax(0, 1fr)); } } @media(max-width:680px) { .products { grid-template-columns: 1fr; } .benefits { grid-template-columns: 1fr; } header { justify-content: center; text-align: center; } nav { justify-content: center; } .ai-chat-window { width: calc(100vw - 30px); left: -10px; } } </style></head><body> <div class="garland"> <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span> <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span> </div><div class="background"></div> <canvas class="snow-canvas" id="snowCanvas"></canvas><!-- === ФОНОВЫЕ ПЕРСОНАЖИ FORTNITE (BACKGROUND SKINS) === --><img src="https://fortnite-api.com/images/cosmetics/br/cid_050_athena_commando_m_holidaynutcracker/featured.png" alt="Crackshot Skin" class="background-skin skin-left"> <img src="https://fortnite-api.com/images/cosmetics/br/cid_049_athena_commando_m_holidaygingerbread/featured.png" alt="Merry Marauder Skin" class="background-skin skin-right"><header> <a href="#" class="logo"> 🎄 DESAIT<span> STORE</span> ❄️ </a>
+
+<nav>
+    <a href="#products">Fortnite 🎄</a>
+    <a href="#telegram">Telegram ❄️</a>
+    <a href="#steam">Steam 🎮</a>
+    <a href="#benefits">Преимущества</a>
+    <button class="header-button" onclick="openOrder()">Заказать 🎁</button>
+    <button class="header-button" id="authNavBtn" onclick="handleAuthClick()">👤 Вход / Профиль</button>
+</nav>
+</header><main> <section class="hero"> <img src="https://images.unsplash.com/photo-1531366936337-7c912a4589a7?q=80&w=1920&auto=format&fit=crop" alt="Winter Aurora Banner" class="hero-bg-img"> <div class="hero-content"> <div class="hero-label">❄️ НОВОГОДНЯЯ РАСПРОДАЖА</div> <h1>DESAIT <span>STORE</span></h1> <p>Погрузись в зимнюю атмосферу с эксклюзивными наборами Fortnite, праздничными подписками и звёздами по выгодным ценам.</p> <div class="hero-buttons"> <a href="#products" class="primary-button">✦ Выбрать товары</a> <a href="#benefits" class="secondary-button">🎄 Почему мы</a> </div> </div> </section><section class="section" id="products"> <div class="section-heading"> <div class="section-tag">FORTNITE • WINTERFEST 🎄</div> <h2>Товары Fortnite</h2> <p>Выбери игровой товар и оформи заявку.</p> </div>
+
+<div class="sub-category-title">💎 V-Bucks</div>
+<div class="products">
+    <article class="product-card">
+        <div class="discount-badge">-15% ❄️</div>
+        <div class="product-image">
+            <img src="https://cdn1.epicgames.com/offer/fn/DE_FNECO_41-00_RMT_CoreV-BucksPacks_800_EGS_Landscape_2560x1440_2560x1440-ab020b33da7247398a34d25547671516" alt="800 V-Bucks" loading="lazy">
+        </div>
+        <div class="product-content">
+            <div class="product-category">FORTNITE • V-BUCKS ❄️</div>
+            <h3>800 V-Bucks</h3>
+            <p class="product-description">Морозный набор игровой валюты для покупок в Fortnite.</p>
+            <div class="price-row">
+                <div class="card-price-wrap">
+                    <span class="old-price">690 ₽</span>
+                    <div class="card-price">590 ₽</div>
+                </div>
+                <button class="buy-button" onclick="openOrder('800 V-Bucks')">КУПИТЬ ↗</button>
+            </div>
+        </div>
+    </article>
+
+    <article class="product-card">
+        <div class="discount-badge">-20% ❄️</div>
+        <div class="best-deal-badge">ВЫГОДНЕЕ ВСЕГО ⭐</div>
+        <div class="product-image">
+            <img src="https://cdn1.epicgames.com/offer/fn/EN_FNECO_41-00_RMT_CoreV-BucksPacks_2400_EGS_Landscape_2560x1440_2560x1440-e51d802c9d414431973ae3e2ba60528d" alt="2400 V-Bucks" loading="lazy">
+        </div>
+        <div class="product-content">
+            <div class="product-category">FORTNITE • V-BUCKS ❄️</div>
+            <h3>2400 V-Bucks</h3>
+            <p class="product-description">Зимний запас валюты для лучших эмоций и предметов.</p>
+            <div class="price-row">
+                <div class="card-price-wrap">
+                    <span class="old-price">1 390 ₽</span>
+                    <div class="card-price">1 100 ₽</div>
+                </div>
+                <button class="buy-button" onclick="openOrder('2400 V-Bucks')">КУПИТЬ ↗</button>
+            </div>
+        </div>
+    </article>
+
+    <article class="product-card">
+        <div class="discount-badge">-25% ❄️</div>
+        <div class="product-image">
+            <img src="https://cdn1.epicgames.com/offer/fn/DE_FNECO_41-00_RMT_CoreV-BucksPacks_4500_EGS_Landscape_2560x1440_2560x1440-dfe9057f285740be86e086b1be4ecb18" alt="4500 V-Bucks" loading="lazy">
+        </div>
+        <div class="product-content">
+            <div class="product-category">FORTNITE • V-BUCKS ❄️</div>
+            <h3>4500 V-Bucks</h3>
+            <p class="product-description">Большой новогодний пакет валюты с максимальной выгодой.</p>
+            <div class="price-row">
+                <div class="card-price-wrap">
+                    <span class="old-price">2 590 ₽</span>
+                    <div class="card-price">1 990 ₽</div>
+                </div>
+                <button class="buy-button" onclick="openOrder('4500 V-Bucks')">КУПИТЬ ↗</button>
+            </div>
+        </div>
+    </article>
 </div>
 
-<div class="background"></div>
-<canvas class="snow-canvas" id="snowCanvas"></canvas>
-
-<header>
-    <a href="#" class="logo">
-        🎄 DESAIT<span> STORE</span> ❄️
-    </a>
-
-    <nav>
-        <a href="#products">Fortnite 🎄</a>
-        <a href="#telegram">Telegram ❄️</a>
-        <a href="#steam">Steam 🎮</a>
-        <a href="#benefits">Преимущества</a>
-        <button class="header-button" onclick="openOrder()">Заказать 🎁</button>
-        <button class="header-button" id="authNavBtn" onclick="handleAuthClick()">👤 Вход / Профиль</button>
-    </nav>
-</header>
-
-<main>
-<section class="hero">
-    <img src="https://images.unsplash.com/photo-1531366936337-7c912a4589a7?q=80&w=1920&auto=format&fit=crop" alt="Winter Aurora Banner" class="hero-bg-img">
-    <div class="hero-content">
-        <div class="hero-label">❄️ НОВОГОДНЯЯ РАСПРОДАЖА</div>
-        <h1>DESAIT <span>STORE</span></h1>
-        <p>Погрузись в зимнюю атмосферу с эксклюзивными наборами Fortnite, праздничными подписками и звёздами по выгодным ценам.</p>
-        <div class="hero-buttons">
-            <a href="#products" class="primary-button">✦ Выбрать товары</a>
-            <a href="#benefits" class="secondary-button">🎄 Почему мы</a>
+<div class="sub-category-title">🎁 Наборы и подписки</div>
+<div class="products">
+    <article class="product-card">
+        <div class="discount-badge">-15% ❄️</div>
+        <div class="product-image">
+            <img src="https://thespike-strapi-cms.s3.us-east-1.amazonaws.com/fortnite_crew_hero_6acc50e94d.jpg" alt="Fortnite Crew" loading="lazy">
         </div>
-    </div>
-</section>
-
-<section class="section" id="products">
-    <div class="section-heading">
-        <div class="section-tag">FORTNITE • WINTERFEST 🎄</div>
-        <h2>Товары Fortnite</h2>
-        <p>Выбери игровой товар и оформи заявку.</p>
-    </div>
-
-    <div class="sub-category-title">💎 V-Bucks</div>
-    <div class="products">
-        <article class="product-card">
-            <div class="discount-badge">-15% ❄️</div>
-            <div class="product-image">
-                <img src="https://cdn1.epicgames.com/offer/fn/DE_FNECO_41-00_RMT_CoreV-BucksPacks_800_EGS_Landscape_2560x1440_2560x1440-ab020b33da7247398a34d25547671516" alt="800 V-Bucks" loading="lazy">
-            </div>
-            <div class="product-content">
-                <div class="product-category">FORTNITE • V-BUCKS ❄️</div>
-                <h3>800 V-Bucks</h3>
-                <p class="product-description">Морозный набор игровой валюты для покупок в Fortnite.</p>
-                <div class="price-row">
-                    <div class="card-price-wrap">
-                        <span class="old-price">690 ₽</span>
-                        <div class="card-price">590 ₽</div>
-                    </div>
-                    <button class="buy-button" onclick="openOrder('800 V-Bucks')">КУПИТЬ ↗</button>
+        <div class="product-content">
+            <div class="product-category">FORTNITE • CREW 🎄</div>
+            <h3>Fortnite Crew (Зима)</h3>
+            <p class="product-description">Эксклюзивная зимняя подписка с уникальным костюмом.</p>
+            <div class="price-row">
+                <div class="card-price-wrap">
+                    <span class="old-price">490 ₽</span>
+                    <div class="card-price">410 ₽</div>
                 </div>
+                <button class="buy-button" onclick="openOrder('Fortnite Crew')">КУПИТЬ ↗</button>
             </div>
-        </article>
+        </div>
+    </article>
 
-        <article class="product-card">
-            <div class="discount-badge">-20% ❄️</div>
-            <div class="best-deal-badge">ВЫГОДНЕЕ ВСЕГО ⭐</div>
-            <div class="product-image">
-                <img src="https://cdn1.epicgames.com/offer/fn/EN_FNECO_41-00_RMT_CoreV-BucksPacks_2400_EGS_Landscape_2560x1440_2560x1440-e51d802c9d414431973ae3e2ba60528d" alt="2400 V-Bucks" loading="lazy">
-            </div>
-            <div class="product-content">
-                <div class="product-category">FORTNITE • V-BUCKS ❄️</div>
-                <h3>2400 V-Bucks</h3>
-                <p class="product-description">Зимний запас валюты для лучших эмоций и предметов.</p>
-                <div class="price-row">
-                    <div class="card-price-wrap">
-                        <span class="old-price">1 390 ₽</span>
-                        <div class="card-price">1 100 ₽</div>
-                    </div>
-                    <button class="buy-button" onclick="openOrder('2400 V-Bucks')">КУПИТЬ ↗</button>
+    <article class="product-card">
+        <div class="discount-badge">-15% ❄️</div>
+        <div class="product-image">
+            <img src="https://cdn1.epicgames.com/offer/fn/RU_FNECO_41-00_RMT_TheAcePack_EGS_Landscape_2560x1440_2560x1440-f0fd4baf103f43b29a14bd403cea6db6" alt="Кража века" loading="lazy">
+        </div>
+        <div class="product-content">
+            <div class="product-category">FORTNITE • PACK 🎄</div>
+            <h3>Кража века</h3>
+            <p class="product-description">Игровой праздничный набор Fortnite.</p>
+            <div class="price-row">
+                <div class="card-price-wrap">
+                    <span class="old-price">1 290 ₽</span>
+                    <div class="card-price">1 090 ₽</div>
                 </div>
+                <button class="buy-button" onclick="openOrder('Кража века')">КУПИТЬ ↗</button>
             </div>
-        </article>
+        </div>
+    </article>
 
-        <article class="product-card">
-            <div class="discount-badge">-25% ❄️</div>
-            <div class="product-image">
-                <img src="https://cdn1.epicgames.com/offer/fn/DE_FNECO_41-00_RMT_CoreV-BucksPacks_4500_EGS_Landscape_2560x1440_2560x1440-dfe9057f285740be86e086b1be4ecb18" alt="4500 V-Bucks" loading="lazy">
-            </div>
-            <div class="product-content">
-                <div class="product-category">FORTNITE • V-BUCKS ❄️</div>
-                <h3>4500 V-Bucks</h3>
-                <p class="product-description">Большой новогодний пакет валюты с максимальной выгодой.</p>
-                <div class="price-row">
-                    <div class="card-price-wrap">
-                        <span class="old-price">2 590 ₽</span>
-                        <div class="card-price">1 990 ₽</div>
-                    </div>
-                    <button class="buy-button" onclick="openOrder('4500 V-Bucks')">КУПИТЬ ↗</button>
+    <!-- ИЗМЕНЕННЫЙ БЛОК: Набор заданий «Бинты и уши» -->
+    <article class="product-card">
+        <div class="discount-badge">-15% ❄️</div>
+        <div class="product-image">
+            <!-- Укажите здесь путь к вашей картинке -->
+            <img src="./binty-i-ushi.jpg" alt="Набор заданий «Бинты и уши»" loading="lazy">
+        </div>
+        <div class="product-content">
+            <div class="product-category">FORTNITE • PACK 🎄</div>
+            <h3>Набор заданий «Бинты и уши»</h3>
+            <p class="product-description">Выполняй задания и получай эксклюзивные награды.</p>
+            <div class="price-row">
+                <div class="card-price-wrap">
+                    <span class="old-price">590 ₽</span>
+                    <div class="card-price">490 ₽</div>
                 </div>
+                <button class="buy-button" onclick="openOrder('Набор заданий «Бинты и уши»')">КУПИТЬ ↗</button>
             </div>
-        </article>
-    </div>
+        </div>
+    </article>
 
-    <div class="sub-category-title">🎁 Наборы и подписки</div>
-    <div class="products">
-        <article class="product-card">
-            <div class="discount-badge">-15% ❄️</div>
-            <div class="product-image">
-                <img src="https://thespike-strapi-cms.s3.us-east-1.amazonaws.com/fortnite_crew_hero_6acc50e94d.jpg" alt="Fortnite Crew" loading="lazy">
-            </div>
-            <div class="product-content">
-                <div class="product-category">FORTNITE • CREW 🎄</div>
-                <h3>Fortnite Crew (Зима)</h3>
-                <p class="product-description">Эксклюзивная зимняя подписка с уникальным костюмом.</p>
-                <div class="price-row">
-                    <div class="card-price-wrap">
-                        <span class="old-price">490 ₽</span>
-                        <div class="card-price">410 ₽</div>
-                    </div>
-                    <button class="buy-button" onclick="openOrder('Fortnite Crew')">КУПИТЬ ↗</button>
+    <!-- ИЗМЕНЕННЫЙ БЛОК: Набор «Искусный взлом» -->
+      <article class="product-card">
+        <div class="discount-badge">-15% ❄️</div>
+        <div class="product-image">
+            <!-- Укажите здесь путь к вашей картинке -->
+            <img src="./iskusniy-vzlom.jpg" alt="Набор «Искусный взлом»" loading="lazy">
+        </div>
+        <div class="product-content">
+            <div class="product-category">FORTNITE • PACK 🎄</div>
+            <h3>Набор «Искусный взлом»</h3>
+            <p class="product-description">Стильный набор для идеального ограбления.</p>
+            <div class="price-row">
+                <div class="card-price-wrap">
+                    <span class="old-price">590 ₽</span>
+                    <div class="card-price">490 ₽</div>
                 </div>
+                <button class="buy-button" onclick="openOrder('Набор «Искусный взлом»')">КУПИТЬ ↗</button>
             </div>
-        </article>
+        </div>
+    </article>
+</div>
+</section><section class="section" id="telegram"> <div class="section-heading"> <div class="section-tag">TELEGRAM ❄️</div> <h2>Праздничный Telegram</h2> <p>Премиум подписка и звёзды для отправки новогодних подарков.</p> </div>
 
-        <article class="product-card">
-            <div class="discount-badge">-15% ❄️</div>
-            <div class="product-image">
-                <img src="https://cdn1.epicgames.com/offer/fn/RU_FNECO_41-00_RMT_TheAcePack_EGS_Landscape_2560x1440_2560x1440-f0fd4baf103f43b29a14bd403cea6db6" alt="Кража века" loading="lazy">
+<div class="products">
+    <article class="product-card">
+        <div class="product-image">
+           <img src="./tg-premium.png" alt="Telegram Premium">
+        </div>
+        <div class="product-content">
+            <div class="product-category">TELEGRAM • PREMIUM ❄️</div>
+            <h3>Telegram Premium</h3>
+            <p class="product-description">Выберите удобный срок зимней подписки.</p>
+
+            <div class="premium-prices">
+                <div class="premium-price"><span>1 месяц</span><strong>440 ₽</strong></div>
+                <button class="buy-button" onclick="openOrder('Telegram Premium — 1 месяц')">КУПИТЬ НА 1 МЕСЯЦ</button>
+
+                <div class="premium-price"><span>3 месяца</span><strong>1 039 ₽</strong></div>
+                <button class="buy-button" onclick="openOrder('Telegram Premium — 3 месяца')">КУПИТЬ НА 3 МЕСЯЦА</button>
+
+                <div class="premium-price"><span>6 месяцев</span><strong>1 340 ₽</strong></div>
+                <button class="buy-button" onclick="openOrder('Telegram Premium — 6 месяцев')">КУПИТЬ НА 6 МЕСЯЦЕВ</button>
+
+                <div class="premium-price"><span>12 месяцев</span><strong>2 380 ₽</strong></div>
+                <button class="buy-button" onclick="openOrder('Telegram Premium — 12 месяцев')">КУПИТЬ НА 12 МЕСЯЦЕВ</button>
             </div>
-            <div class="product-content">
-                <div class="product-category">FORTNITE • PACK 🎄</div>
-                <h3>Кража века</h3>
-                <p class="product-description">Игровой праздничный набор Fortnite.</p>
-                <div class="price-row">
-                    <div class="card-price-wrap">
-                        <span class="old-price">1 290 ₽</span>
-                        <div class="card-price">1 090 ₽</div>
-                    </div>
-                    <button class="buy-button" onclick="openOrder('Кража века')">КУПИТЬ ↗</button>
-                </div>
+        </div>
+    </article>
+
+    <article class="product-card">
+        <div class="product-image">
+            <img src="./stars.png" alt="Звёзды" style="width:100%; height:180px; object-fit:cover;">
+        </div>
+        <div class="product-content">
+            <div class="product-category">TELEGRAM • STARS 🎄</div>
+            <h3>Звёзды Telegram</h3>
+            <p class="product-description">Дарите друзьям праздничные реакции и подарки.</p>
+
+            <div class="premium-prices">
+                <div class="premium-price"><span>50 звёзд</span><strong>90 ₽</strong></div>
+                <div class="premium-price"><span>100 звёзд</span><strong>170 ₽</strong></div>
+                <div class="premium-price"><span>200 звёзд</span><strong>330 ₽</strong></div>
+                <div class="premium-price"><span>500 звёзд</span><strong>790 ₽</strong></div>
+                <button class="buy-button" onclick="openOrder('Telegram Stars — 50 звёзд')">ВЫБРАТЬ И ЗАКАЗАТЬ ↗</button>
             </div>
-        </article>
-    </div>
-</section>
+        </div>
+    </article>
+</div>
+</section><section class="section" id="steam"> <div class="section-heading"> <div class="section-tag">STEAM 🎮</div> <h2>Игры и пополнение Steam</h2> <p>Пополняйте баланс для зимней распродажи игр.</p> </div>
 
-<section class="section" id="telegram">
-    <div class="section-heading">
-        <div class="section-tag">TELEGRAM ❄️</div>
-        <h2>Праздничный Telegram</h2>
-        <p>Премиум подписка и звёзды для отправки новогодних подарков.</p>
-    </div>
-
-    <div class="products">
-        <article class="product-card">
-            <div class="product-image">
-               <img src="./tg-premium.png" alt="Telegram Premium">
-            </div>
-            <div class="product-content">
-                <div class="product-category">TELEGRAM • PREMIUM ❄️</div>
-                <h3>Telegram Premium</h3>
-                <p class="product-description">Выберите удобный срок зимней подписки.</p>
-
-                <div class="premium-prices">
-                    <div class="premium-price"><span>1 месяц</span><strong>440 ₽</strong></div>
-                    <button class="buy-button" onclick="openOrder('Telegram Premium — 1 месяц')">КУПИТЬ НА 1 МЕСЯЦ</button>
-
-                    <div class="premium-price"><span>3 месяца</span><strong>1 039 ₽</strong></div>
-                    <button class="buy-button" onclick="openOrder('Telegram Premium — 3 месяца')">КУПИТЬ НА 3 МЕСЯЦА</button>
-
-                    <div class="premium-price"><span>6 месяцев</span><strong>1 340 ₽</strong></div>
-                    <button class="buy-button" onclick="openOrder('Telegram Premium — 6 месяцев')">КУПИТЬ НА 6 МЕСЯЦЕВ</button>
-
-                    <div class="premium-price"><span>12 месяцев</span><strong>2 380 ₽</strong></div>
-                    <button class="buy-button" onclick="openOrder('Telegram Premium — 12 месяцев')">КУПИТЬ НА 12 МЕСЯЦЕВ</button>
-                </div>
-            </div>
-        </article>
-
-        <article class="product-card">
-            <div class="product-image">
-                <img src="./stars.png" alt="Звёзды" style="width:100%; height:180px; object-fit:cover;">
-            </div>
-            <div class="product-content">
-                <div class="product-category">TELEGRAM • STARS 🎄</div>
-                <h3>Звёзды Telegram</h3>
-                <p class="product-description">Дарите друзьям праздничные реакции и подарки.</p>
-
-                <div class="premium-prices">
-                    <div class="premium-price"><span>50 звёзд</span><strong>90 ₽</strong></div>
-                    <div class="premium-price"><span>100 звёзд</span><strong>170 ₽</strong></div>
-                    <div class="premium-price"><span>200 звёзд</span><strong>330 ₽</strong></div>
-                    <div class="premium-price"><span>500 звёзд</span><strong>790 ₽</strong></div>
-                    <button class="buy-button" onclick="openOrder('Telegram Stars — 50 звёзд')">ВЫБРАТЬ И ЗАКАЗАТЬ ↗</button>
-                </div>
-            </div>
-        </article>
-    </div>
-</section>
-
-<section class="section" id="steam">
-    <div class="section-heading">
-        <div class="section-tag">STEAM 🎮</div>
-        <h2>Игры и пополнение Steam</h2>
-        <p>Пополняйте баланс для зимней распродажи игр.</p>
-    </div>
-
-    <div class="products">
-        <article class="product-card">
-            <div class="product-image">
-                <img src="./steam.png" alt="Steam" loading="lazy">
-            </div>
-
-            <div class="product-content">
-                <div class="product-category">STEAM • WALLET ❄️</div>
-                <h3>Пополнение Steam</h3>
-                <p class="product-description">Моментальное пополнение аккаунта с комиссией 8%.</p>
-
-                <div class="premium-prices">
-                    <div class="premium-price"><span>100 ₽ на баланс</span><strong>108 ₽</strong></div>
-                    <div class="premium-price"><span>500 ₽ на баланс</span><strong>540 ₽</strong></div>
-                    <div class="premium-price"><span>1 000 ₽ на баланс</span><strong>1 080 ₽</strong></div>
-                    <div class="premium-price"><span>2 000 ₽ на баланс</span><strong>2 160 ₽</strong></div>
-                    <button class="buy-button" style="width:100%; margin-top:8px;" onclick="openOrder('Пополнение Steam')">ПОПОЛНИТЬ STEAM ↗</button>
-                </div>
-            </div>
-        </article>
-
-        <article class="product-card">
-            <div class="product-image">
-                <img src="./steam.png" alt="Игры Steam" loading="lazy">
-            </div>
-
-            <div class="product-content">
-                <div class="product-category">STEAM • GAMES 🎄</div>
-                <h3>Игры и подарки</h3>
-                <p class="product-description">Укажите желаемую игру и регион для подарка.</p>
-                <div class="price-row">
-                    <div class="card-price">Уточнить</div>
-                    <button class="buy-button" onclick="openOrder('Игры и подарки Steam')">ЗАКАЗАТЬ ↗</button>
-                </div>
-            </div>
-        </article>
-    </div>
-</section>
-
-<section class="section" id="benefits">
-    <div class="section-heading">
-        <div class="section-tag">ПОЧЕМУ МЫ 🎄</div>
-        <h2>Праздничные преимущества</h2>
-    </div>
-
-    <div class="benefits">
-        <div class="benefit">
-            <div class="benefit-icon">⚡</div>
-            <h3>Быстро в Новый год</h3>
-            <p>Моментальная обработка заявок даже в праздничные дни.</p>
+<div class="products">
+    <article class="product-card">
+        <div class="product-image">
+            <img src="./steam.png" alt="Steam" loading="lazy">
         </div>
 
-        <div class="benefit">
-            <div class="benefit-icon">❄️</div>
-            <h3>Зимние скидки</h3>
-            <p>Специальная праздничная выгода на популярные товары.</p>
+        <div class="product-content">
+            <div class="product-category">STEAM • WALLET ❄️</div>
+            <h3>Пополнение Steam</h3>
+            <p class="product-description">Моментальное пополнение аккаунта с комиссией 8%.</p>
+
+            <div class="premium-prices">
+                <div class="premium-price"><span>100 ₽ на баланс</span><strong>108 ₽</strong></div>
+                <div class="premium-price"><span>500 ₽ на баланс</span><strong>540 ₽</strong></div>
+                <div class="premium-price"><span>1 000 ₽ на баланс</span><strong>1 080 ₽</strong></div>
+                <div class="premium-price"><span>2 000 ₽ на баланс</span><strong>2 160 ₽</strong></div>
+                <button class="buy-button" style="width:100%; margin-top:8px;" onclick="openOrder('Пополнение Steam')">ПОПОЛНИТЬ STEAM ↗</button>
+            </div>
+        </div>
+    </article>
+
+    <article class="product-card">
+        <div class="product-image">
+            <img src="./steam.png" alt="Игры Steam" loading="lazy">
         </div>
 
-        <div class="benefit">
-            <div class="benefit-icon">🎁</div>
-            <h3>Надежность</h3>
-            <p>Безопасное оформление заказов и круглосуточная поддержка.</p>
+        <div class="product-content">
+            <div class="product-category">STEAM • GAMES 🎄</div>
+            <h3>Игры и подарки</h3>
+            <p class="product-description">Укажите желаемую игру и регион для подарка.</p>
+            <div class="price-row">
+                <div class="card-price">Уточнить</div>
+                <button class="buy-button" onclick="openOrder('Игры и подарки Steam')">ЗАКАЗАТЬ ↗</button>
+            </div>
+        </div>
+    </article>
+</div>
+</section><section class="section" id="benefits"> <div class="section-heading"> <div class="section-tag">ПОЧЕМУ МЫ 🎄</div> <h2>Праздничные преимущества</h2> </div>
+
+<div class="benefits">
+    <div class="benefit">
+        <div class="benefit-icon">⚡</div>
+        <h3>Быстро в Новый год</h3>
+        <p>Моментальная обработка заявок даже в праздничные дни.</p>
+    </div>
+
+    <div class="benefit">
+        <div class="benefit-icon">❄️</div>
+        <h3>Зимние скидки</h3>
+        <p>Специальная праздничная выгода на популярные товары.</p>
+    </div>
+
+    <div class="benefit">
+        <div class="benefit-icon">🎁</div>
+        <h3>Надежность</h3>
+        <p>Безопасное оформление заказов и круглосуточная поддержка.</p>
+    </div>
+</div>
+</section> </main><footer> <strong>🎄 DESAIT STORE ❄️</strong> <span>цифровой магазин игр и услуг.</span> <span>© <span id="year"></span> DESAIT STORE</span> </footer><!-- === ВИДЖЕТ ПОДДЕРЖКИ 24/7 С АВТО-НЕЙРОБОТОМ === --><div class="ai-support-widget"> <button class="ai-support-toggle" onclick="toggleAIChat()"> <div class="ai-support-toggle-icon">🤖</div> <span id="supportToggleText">Поддержка 24/7</span> <div class="ai-status-dot"></div> </button>
+
+<div class="ai-chat-window" id="aiChatWindow">
+    <div class="ai-chat-header">
+        <div class="ai-chat-title-wrap">
+            <div class="ai-chat-avatar">⚡</div>
+            <div class="ai-chat-info">
+                <h4 id="chatHeaderTitle">Desait AI Bot</h4>
+                <p><span class="ai-status-dot"></span> <span id="chatHeaderStatus">Онлайн 24/7</span></p>
+            </div>
+        </div>
+        <div class="ai-chat-controls">
+            <button class="lang-switch-btn" onclick="toggleLanguage()" id="langBtn">RU | EN</button>
+            <button class="ai-chat-close" onclick="toggleAIChat()">×</button>
         </div>
     </div>
-</section>
-</main>
 
-<footer>
-    <strong>🎄 DESAIT STORE ❄️</strong>
-    <span>цифровой магазин игр и услуг.</span>
-    <span>© <span id="year"></span> DESAIT STORE</span>
-</footer>
+    <div class="ai-chat-body" id="chatBody">
+        <div class="chat-msg bot" id="welcomeMsg">
+            Привет! ❄️ Я нейробот поддержки DESAIT STORE.
+        </div>
+        <div class="chat-msg bot" id="promoOfferMsg">
+            Хочешь бесплатный промокод на скидку для товаров? 🎁
+            <br>
+            <button class="promo-action-btn" onclick="claimPromoCode()">ДА! 🎁</button>
+        </div>
+    </div>
 
-<!-- === ВИДЖЕТ ПОДДЕРЖКИ 24/7 С АВТО-НЕЙРОБОТОМ СЛЕВА В УГЛУ === -->
-<div class="ai-support-widget">
-    <button class="ai-support-toggle" onclick="toggleAIChat()">
-        <div class="ai-support-toggle-icon">🤖</div>
-        <span id="supportToggleText">Поддержка 24/7</span>
-        <div class="ai-status-dot"></div>
+    <div class="ai-quick-questions" id="quickQuestions">
+        <button class="quick-q-btn" onclick="sendQuickQ('как купить')">🛒 Как купить?</button>
+        <button class="quick-q-btn" onclick="sendQuickQ('доставка')">⚡ Сколько доставка?</button>
+        <button class="quick-q-btn" onclick="sendQuickQ('гарантии')">🛡️ Какие гарантии?</button>
+    </div>
+
+    <div class="ai-chat-input-area">
+        <input type="text" class="ai-chat-input" id="chatInput" placeholder="Задайте вопрос..." onkeydown="if(event.key==='Enter') sendUserMsg()">
+        <button class="ai-chat-send-btn" onclick="sendUserMsg()">➤</button>
+    </div>
+</div>
+</div><div class="modal" id="orderModal" onclick="outsideClick(event)"> <div class="modal-content"> <button class="modal-close" onclick="closeOrder()" aria-label="Закрыть">×</button> <h2>Оформление заказа ❄️</h2> <p class="modal-subtitle">Выберите товар и оставьте контакт для связи с продавцом.</p>
+
+    <form id="orderForm">
+        <label class="form-label" for="productSelect">Товар</label>
+        <select class="form-control" id="productSelect" required>
+            <option value="800 V-Bucks">800 V-Bucks — 590 ₽</option>
+            <option value="2400 V-Bucks">2400 V-Bucks — 1 100 ₽</option>
+            <option value="4500 V-Bucks">4500 V-Bucks — 1 990 ₽</option>
+            <option value="Fortnite Crew">Fortnite Crew — 410 ₽</option>
+            <option value="Кража века">Кража века — 1 090 ₽</option>
+            <option value="Набор заданий «Бинты и уши»">Набор заданий «Бинты и уши» — 490 ₽</option>
+            <option value="Набор «Искусный взлом»">Набор «Искусный взлом» — 490 ₽</option>
+            <option value="Telegram Premium — 1 месяц">Telegram Premium — 1 месяц — 440 ₽</option>
+            <option value="Telegram Premium — 3 месяца">Telegram Premium — 3 месяца — 1 039 ₽</option>
+            <option value="Telegram Premium — 6 месяцев">Telegram Premium — 6 месяцев — 1 340 ₽</option>
+            <option value="Telegram Premium — 12 месяцев">Telegram Premium — 12 месяцев — 2 380 ₽</option>
+            <option value="Telegram Stars — 50 звёзд">Telegram Stars — 50 звёзд — 90 ₽</option>
+            <option value="Telegram Stars — 100 звёзд">Telegram Stars — 100 звёзд — 170 ₽</option>
+            <option value="Telegram Stars — 200 звёзд">Telegram Stars — 200 звёзд — 330 ₽</option>
+            <option value="Telegram Stars — 500 звёзд">Telegram Stars — 500 звёзд — 790 ₽</option>
+            <option value="Пополнение Steam">Пополнение Steam — уточнить</option>
+            <option value="Игры и подарки Steam">Игры и подарки Steam — уточнить</option>
+        </select>
+
+        <label class="form-label" for="contactInput">Контакт для связи</label>
+        <input class="form-control" id="contactInput" type="text" placeholder="Telegram @username" required maxlength="100">
+
+        <label class="form-label" for="commentInput">Комментарий (необязательно)</label>
+        <input class="form-control" id="commentInput" type="text" placeholder="Пожелания, регион или игра" maxlength="300">
+
+        <div class="total-row">
+            <span>Итоговая стоимость</span>
+            <strong id="totalPrice">590 ₽</strong>
+        </div>
+
+        <button class="submit-button" type="submit">ПОДГОТОВИТЬ ЗАЯВКУ ❄️</button>
+    </form>
+
+    <div class="order-result" id="orderResult">
+        <p id="orderText"></p>
+        <button class="copy-button" id="copyButton" onclick="copyOrder()">Скопировать заявку</button>
+    </div>
+
+    <p class="notice">Праздничные заявки обрабатываются в приоритетном порядке!</p>
+</div>
+</div><div class="modal" id="loginModal" onclick="outsideLoginClick(event)"> <div class="modal-content"> <button class="modal-close" onclick="closeLoginModal()" aria-label="Закрыть">×</button> <h2>Вход в аккаунт ❄️</h2> <p class="modal-subtitle">Введите вашу почту и пароль для входа в систему.</p>
+
+    <form id="loginForm" onsubmit="handleLogin(event)">
+        <label class="form-label" for="loginEmail">Электронная почта</label>
+        <input class="form-control" id="loginEmail" type="email" placeholder="example@mail.com" required>
+
+        <label class="form-label" for="loginPassword">Пароль</label>
+        <input class="form-control" id="loginPassword" type="password" placeholder="••••••••" required>
+
+        <button class="submit-button" type="submit" style="margin-top:20px;">ВОЙТИ 🚀</button>
+    </form>
+
+    <!-- === КНОПКА GOOGLE === -->
+    <div class="auth-divider"><span>ИЛИ</span></div>
+    <button type="button" class="google-auth-btn" onclick="handleGoogleLogin()">
+        <svg viewBox="0 0 24 24" width="20" height="20" xmlns="http://www.w3.org/2000/svg">
+            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+        </svg>
+        Войти через Google
     </button>
 
-    <div class="ai-chat-window" id="aiChatWindow">
-        <div class="ai-chat-header">
-            <div class="ai-chat-title-wrap">
-                <div class="ai-chat-avatar">⚡</div>
-                <div class="ai-chat-info">
-                    <h4 id="chatHeaderTitle">Desait AI Bot</h4>
-                    <p><span class="ai-status-dot"></span> <span id="chatHeaderStatus">Онлайн 24/7</span></p>
-                </div>
-            </div>
-            <div class="ai-chat-controls">
-                <button class="lang-switch-btn" onclick="toggleLanguage()" id="langBtn">RU | EN</button>
-                <button class="ai-chat-close" onclick="toggleAIChat()">×</button>
-            </div>
-        </div>
-
-        <div class="ai-chat-body" id="chatBody">
-            <div class="chat-msg bot" id="welcomeMsg">
-                Привет! ❄️ Я нейробот поддержки DESAIT STORE.
-            </div>
-            <div class="chat-msg bot" id="promoOfferMsg">
-                Хочешь бесплатный промокод на скидку для товаров? 🎁
-                <br>
-                <button class="promo-action-btn" onclick="claimPromoCode()">ДА! 🎁</button>
-            </div>
-        </div>
-
-        <div class="ai-quick-questions" id="quickQuestions">
-            <button class="quick-q-btn" onclick="sendQuickQ('как купить')">🛒 Как купить?</button>
-            <button class="quick-q-btn" onclick="sendQuickQ('доставка')">⚡ Сколько доставка?</button>
-            <button class="quick-q-btn" onclick="sendQuickQ('гарантии')">🛡️ Какие гарантии?</button>
-        </div>
-
-        <div class="ai-chat-input-area">
-            <input type="text" class="ai-chat-input" id="chatInput" placeholder="Задайте вопрос..." onkeydown="if(event.key==='Enter') sendUserMsg()">
-            <button class="ai-chat-send-btn" onclick="sendUserMsg()">➤</button>
-        </div>
-    </div>
+    <p style="text-align: center; margin-top: 15px; font-size: 11px; color: #94a3b8;">
+        Нет аккаунта? <a href="#" onclick="switchToRegister(event)" style="color: var(--frost-blue); text-decoration: none; font-weight: 700;">Зарегистрироваться</a>
+    </p>
 </div>
+</div><div class="modal" id="authModal" onclick="outsideAuthClick(event)"> <div class="modal-content"> <button class="modal-close" onclick="closeAuthModal()" aria-label="Закрыть">×</button> <h2>Регистрация аккаунта ❄️</h2> <p class="modal-subtitle">Введите почту и надежный пароль (минимум 8 символов, буквы и цифры).</p>
 
-<div class="modal" id="orderModal" onclick="outsideClick(event)">
-    <div class="modal-content">
-        <button class="modal-close" onclick="closeOrder()" aria-label="Закрыть">×</button>
-        <h2>Оформление заказа ❄️</h2>
-        <p class="modal-subtitle">Выберите товар и оставьте контакт для связи с продавцом.</p>
+    <form id="registerForm" onsubmit="handleRegister(event)">
+        <label class="form-label" for="regEmail">Электронная почта</label>
+        <input class="form-control" id="regEmail" type="email" placeholder="example@mail.com" required>
 
-        <form id="orderForm">
-            <label class="form-label" for="productSelect">Товар</label>
-            <select class="form-control" id="productSelect" required>
-                <option value="800 V-Bucks">800 V-Bucks — 590 ₽</option>
-                <option value="2400 V-Bucks">2400 V-Bucks — 1 100 ₽</option>
-                <option value="4500 V-Bucks">4500 V-Bucks — 1 990 ₽</option>
-                <option value="Fortnite Crew">Fortnite Crew — 410 ₽</option>
-                <option value="Кража века">Кража века — 1 090 ₽</option>
-                <option value="Telegram Premium — 1 месяц">Telegram Premium — 1 месяц — 440 ₽</option>
-                <option value="Telegram Premium — 3 месяца">Telegram Premium — 3 месяца — 1 039 ₽</option>
-                <option value="Telegram Premium — 6 месяцев">Telegram Premium — 1 340 ₽</option>
-                <option value="Telegram Premium — 12 месяцев">Telegram Premium — 2 380 ₽</option>
-                <option value="Telegram Stars — 50 звёзд">Telegram Stars — 50 звёзд — 90 ₽</option>
-                <option value="Telegram Stars — 100 звёзд">Telegram Stars — 100 звёзд — 170 ₽</option>
-                <option value="Telegram Stars — 200 звёзд">Telegram Stars — 200 звёзд — 330 ₽</option>
-                <option value="Telegram Stars — 500 звёзд">Telegram Stars — 500 звёзд — 790 ₽</option>
-                <option value="Пополнение Steam">Пополнение Steam — уточнить</option>
-                <option value="Игры и подарки Steam">Игры и подарки Steam — уточнить</option>
-            </select>
+        <label class="form-label" for="regPassword">Пароль</label>
+        <input class="form-control" id="regPassword" type="password" placeholder="Не менее 8 символов (буквы и цифры)" required minlength="8">
 
-            <label class="form-label" for="contactInput">Контакт для связи</label>
-            <input class="form-control" id="contactInput" type="text" placeholder="Telegram @username" required maxlength="100">
+        <button class="submit-button" type="submit" style="margin-top:20px;">ЗАРЕГИСТРИРОВАТЬСЯ 🚀</button>
+    </form>
 
-            <label class="form-label" for="commentInput">Комментарий (необязательно)</label>
-            <input class="form-control" id="commentInput" type="text" placeholder="Пожелания, регион или игра" maxlength="300">
+    <!-- === КНОПКА GOOGLE === -->
+    <div class="auth-divider"><span>ИЛИ</span></div>
+    <button type="button" class="google-auth-btn" onclick="handleGoogleLogin()">
+        <svg viewBox="0 0 24 24" width="20" height="20" xmlns="http://www.w3.org/2000/svg">
+            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+        </svg>
+        Продолжить с Google
+    </button>
 
-            <div class="total-row">
-                <span>Итоговая стоимость</span>
-                <strong id="totalPrice">590 ₽</strong>
-            </div>
-
-            <button class="submit-button" type="submit">ПОДГОТОВИТЬ ЗАЯВКУ ❄️</button>
-        </form>
-
-        <div class="order-result" id="orderResult">
-            <p id="orderText"></p>
-            <button class="copy-button" id="copyButton" onclick="copyOrder()">Скопировать заявку</button>
-        </div>
-
-        <p class="notice">Праздничные заявки обрабатываются в приоритетном порядке!</p>
-    </div>
+    <p style="text-align: center; margin-top: 15px; font-size: 11px; color: #94a3b8;">
+        Уже есть аккаунт? <a href="#" onclick="switchToLogin(event)" style="color: var(--frost-blue); text-decoration: none; font-weight: 700;">Войти</a>
+    </p>
 </div>
+</div><div class="modal" id="profileModal" onclick="outsideProfileClick(event)"> <div class="modal-content"> <button class="modal-close" onclick="closeProfileModal()" aria-label="Закрыть">×</button> <h2>Личный кабинет 🎄</h2> <p class="modal-subtitle">Добро пожаловать в ваш аккаунт!</p>
 
-<div class="modal" id="loginModal" onclick="outsideLoginClick(event)">
-    <div class="modal-content">
-        <button class="modal-close" onclick="closeLoginModal()" aria-label="Закрыть">×</button>
-        <h2>Вход в аккаунт ❄️</h2>
-        <p class="modal-subtitle">Введите вашу почту и пароль для входа в систему.</p>
-
-        <form id="loginForm" onsubmit="handleLogin(event)">
-            <label class="form-label" for="loginEmail">Электронная почта</label>
-            <input class="form-control" id="loginEmail" type="email" placeholder="example@mail.com" required>
-
-            <label class="form-label" for="loginPassword">Пароль</label>
-            <input class="form-control" id="loginPassword" type="password" placeholder="••••••••" required>
-
-            <button class="submit-button" type="submit" style="margin-top:20px;">ВОЙТИ 🚀</button>
-        </form>
-
-        <p style="text-align: center; margin-top: 15px; font-size: 11px; color: #94a3b8;">
-            Нет аккаунта? <a href="#" onclick="switchToRegister(event)" style="color: var(--frost-blue); text-decoration: none; font-weight: 700;">Зарегистрироваться</a>
-        </p>
+    <div class="profile-avatar-container">
+        <div class="profile-avatar-wrapper" id="currentAvatarWrapper">
+            <img id="currentAvatarImg" src="" alt="Аватар профиля">
+        </div>
+        <p style="font-size: 10px; color: #94a3b8; margin-top: 8px; font-weight: 700;">Выберите персонажа для аватарки:</p>
+        <div class="avatar-grid" id="avatarGrid"></div>
     </div>
-</div>
 
-<div class="modal" id="authModal" onclick="outsideAuthClick(event)">
-    <div class="modal-content">
-        <button class="modal-close" onclick="closeAuthModal()" aria-label="Закрыть">×</button>
-        <h2>Регистрация аккаунта ❄️</h2>
-        <p class="modal-subtitle">Введите почту и надежный пароль (минимум 8 символов, буквы и цифры).</p>
-
-        <form id="registerForm" onsubmit="handleRegister(event)">
-            <label class="form-label" for="regEmail">Электронная почта</label>
-            <input class="form-control" id="regEmail" type="email" placeholder="example@mail.com" required>
-
-            <label class="form-label" for="regPassword">Пароль</label>
-            <input class="form-control" id="regPassword" type="password" placeholder="Не менее 8 символов (буквы и цифры)" required minlength="8">
-
-            <button class="submit-button" type="submit" style="margin-top:20px;">ЗАРЕГИСТРИРОВАТЬСЯ 🚀</button>
-        </form>
-
-        <p style="text-align: center; margin-top: 15px; font-size: 11px; color: #94a3b8;">
-            Уже есть аккаунт? <a href="#" onclick="switchToLogin(event)" style="color: var(--frost-blue); text-decoration: none; font-weight: 700;">Войти</a>
-        </p>
+    <div style="background: rgba(0, 240, 255, 0.05); border: 1px solid rgba(0, 240, 255, 0.3); border-radius: 12px; padding: 12px; margin: 10px 0;">
+        <p style="font-size: 11px; color: #94a3b8;">Привязанная почта:</p>
+        <strong id="profileEmailDisplay" style="font-family: 'Orbitron', sans-serif; font-size: 13px; color: var(--frost-blue);"></strong>
     </div>
-</div>
 
-<div class="modal" id="profileModal" onclick="outsideProfileClick(event)">
-    <div class="modal-content">
-        <button class="modal-close" onclick="closeProfileModal()" aria-label="Закрыть">×</button>
-        <h2>Личный кабинет 🎄</h2>
-        <p class="modal-subtitle">Добро пожаловать в ваш аккаунт!</p>
-
-        <div class="profile-avatar-container">
-            <div class="profile-avatar-wrapper" id="currentAvatarWrapper">
-                <img id="currentAvatarImg" src="" alt="Аватар профиля">
-            </div>
-            <p style="font-size: 10px; color: #94a3b8; margin-top: 8px; font-weight: 700;">Выберите персонажа для аватарки:</p>
-            <div class="avatar-grid" id="avatarGrid"></div>
-        </div>
-
-        <div style="background: rgba(0, 240, 255, 0.05); border: 1px solid rgba(0, 240, 255, 0.3); border-radius: 12px; padding: 12px; margin: 10px 0;">
-            <p style="font-size: 11px; color: #94a3b8;">Привязанная почта:</p>
-            <strong id="profileEmailDisplay" style="font-family: 'Orbitron', sans-serif; font-size: 13px; color: var(--frost-blue);"></strong>
-        </div>
-
-        <div style="margin: 10px 0;">
-            <p style="font-size: 12px; color: #cbd5e1; line-height: 1.5;">🎁 <strong>Статус:</strong> Авторизован</p>
-            <p style="font-size: 12px; color: #cbd5e1; line-height: 1.5; margin-top: 3px;">⚡ <strong>Скидка:</strong> Новогодняя скидка учтена в каталоге</p>
-        </div>
-
-        <button class="logout-button" onclick="handleLogout()">ВЫЙТИ ИЗ АККАУНТА</button>
+    <div style="margin: 10px 0;">
+        <p style="font-size: 12px; color: #cbd5e1; line-height: 1.5;">🎁 <strong>Статус:</strong> Авторизован</p>
+        <p style="font-size: 12px; color: #cbd5e1; line-height: 1.5; margin-top: 3px;">⚡ <strong>Скидка:</strong> Новогодняя скидка учтена в каталоге</p>
     </div>
+
+    <button class="logout-button" onclick="handleLogout()">ВЫЙТИ ИЗ АККАУНТА</button>
 </div>
-
-<script>
-const prices = {
-    "800 V-Bucks": 590,
-    "2400 V-Bucks": 1100,
-    "4500 V-Bucks": 1990,
-    "Fortnite Crew": 410,
-    "Кража века": 1090,
-
-    "Telegram Premium — 1 месяц": 440,
-    "Telegram Premium — 3 месяца": 1039,
-    "Telegram Premium — 6 месяцев": 1340,
-    "Telegram Premium — 12 месяцев": 2380,
-
-    "Telegram Stars — 50 звёзд": 90,
-    "Telegram Stars — 100 звёзд": 170,
-    "Telegram Stars — 200 звёзд": 330,
-    "Telegram Stars — 500 звёзд": 790,
-
-    "Пополнение Steam": null,
-    "Игры и подарки Steam": null
-};
-
-// Официальные картинки скинов Fortnite
-const fortniteAvatarsNew = [
-    { bg: "#020617", img: "https://fortnite-api.com/images/cosmetics/br/character_jonesy_fortnite/icon.png" },
-    { bg: "#020617", img: "https://fortnite-api.com/images/cosmetics/br/cid_028_athena_commando_f/icon.png" },
-    { bg: "#020617", img: "https://fortnite-api.com/images/cosmetics/br/cid_029_athena_commando_m_halloween/icon.png" },
-    { bg: "#020617", img: "https://fortnite-api.com/images/cosmetics/br/cid_030_athena_commando_m_halloween/icon.png" },
-    { bg: "#020617", img: "https://fortnite-api.com/images/cosmetics/br/cid_116_athena_commando_m_cyborg/icon.png" },
-    { bg: "#020617", img: "https://fortnite-api.com/images/cosmetics/br/cid_175_athena_commando_m_celestial/icon.png" },
-    { bg: "#020617", img: "https://fortnite-api.com/images/cosmetics/br/cid_313_athena_commando_m_kpopfashion/icon.png" },
-    { bg: "#020617", img: "https://fortnite-api.com/images/cosmetics/br/cid_431_athena_commando_m_virgil/icon.png" },
-    { bg: "#020617", img: "https://fortnite-api.com/images/cosmetics/br/cid_516_athena_commando_m_banana/icon.png" },
-    { bg: "#020617", img: "https://fortnite-api.com/images/cosmetics/br/cid_342_athena_commando_m_streetgoth/icon.png" }
-];
-
-const modal = document.getElementById("orderModal");
-const loginModal = document.getElementById("loginModal");
-const authModal = document.getElementById("authModal");
-const profileModal = document.getElementById("profileModal");
-const productSelect = document.getElementById("productSelect");
-const totalPrice = document.getElementById("totalPrice");
-const orderResult = document.getElementById("orderResult");
-
-let preparedOrder = "";
-document.getElementById("year").textContent = new Date().getFullYear();
-
-const canvas = document.getElementById("snowCanvas");
-const ctx = canvas.getContext("2d");
-
-function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-}
-window.addEventListener("resize", resizeCanvas);
-resizeCanvas();
-
-const snowflakes = [];
-for (let i = 0; i < 110; i++) {
-    snowflakes.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        radius: Math.random() * 3 + 1,
-        speed: Math.random() * 1.5 + 0.5,
-        wind: Math.random() * 1 - 0.5
-    });
-}
-
-function drawSnow() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = "rgba(255, 255, 255, 0.85)";
-    ctx.beginPath();
-    for (let flake of snowflakes) {
-        ctx.moveTo(flake.x, flake.y);
-        ctx.arc(flake.x, flake.y, flake.radius, 0, Math.PI * 2, true);
-    }
-    ctx.fill();
-    updateSnow();
-    requestAnimationFrame(drawSnow);
-}
-
-function updateSnow() {
-    for (let flake of snowflakes) {
-        flake.y += flake.speed;
-        flake.x += flake.wind;
-        if (flake.y > canvas.height) {
-            flake.y = 0;
-            flake.x = Math.random() * canvas.width;
-        }
-    }
-}
-drawSnow();
-
-function formatPrice(price) {
-    return price === null || price === undefined ? "Уточнить" : price.toLocaleString("ru-RU") + " ₽";
-}
-
-function updatePrice() {
-    totalPrice.textContent = formatPrice(prices[productSelect.value]);
-}
-
-function openOrder(product) {
-    modal.classList.add("active");
-    document.body.style.overflow = "hidden";
-    orderResult.classList.remove("show");
-
-    if (product && Object.prototype.hasOwnProperty.call(prices, product)) {
-        productSelect.value = product;
-    }
-    updatePrice();
-}
-
-function closeOrder() {
-    modal.classList.remove("active");
-    document.body.style.overflow = "";
-}
-
-function outsideClick(event) {
-    if (event.target === modal) closeOrder();
-}
-
-function updateHeaderUI() {
-    const activeEmail = localStorage.getItem("desait_user");
-    const authBtn = document.getElementById("authNavBtn");
-
-    if (activeEmail) {
-        let savedIndex = localStorage.getItem("desait_avatar_idx_" + activeEmail);
-        if (savedIndex === null || savedIndex >= fortniteAvatarsNew.length) {
-            savedIndex = 0;
-        } else {
-            savedIndex = parseInt(savedIndex, 10);
-        }
-        const avatarUrl = fortniteAvatarsNew[savedIndex].img;
-
-        authBtn.className = "header-button header-profile-btn";
-        authBtn.innerHTML = `<img src="${avatarUrl}" alt="Аватар"> Профиль`;
-    } else {
-        authBtn.className = "header-button";
-        authBtn.innerHTML = `👤 Вход / Профиль`;
-    }
-}
-
-function renderAvatarGrid() {
-    const grid = document.getElementById("avatarGrid");
-    grid.innerHTML = "";
-    const activeEmail = localStorage.getItem("desait_user");
-    
-    let savedIndex = localStorage.getItem("desait_avatar_idx_" + activeEmail);
-    if (savedIndex === null || savedIndex >= fortniteAvatarsNew.length) {
-        savedIndex = 0;
-    } else {
-        savedIndex = parseInt(savedIndex, 10);
-    }
-
-    const currentAvatar = fortniteAvatarsNew[savedIndex];
-    
-    const wrapper = document.getElementById("currentAvatarWrapper");
-    const imgDisplay = document.getElementById("currentAvatarImg");
-    
-    wrapper.style.backgroundColor = currentAvatar.bg;
-    imgDisplay.src = currentAvatar.img;
-
-    fortniteAvatarsNew.forEach((item, index) => {
-        const itemDiv = document.createElement("div");
-        itemDiv.className = "avatar-item" + (index === savedIndex ? " selected" : "");
-        itemDiv.style.backgroundColor = item.bg;
-
-        const img = document.createElement("img");
-        img.src = item.img;
-        img.alt = "Avatar " + (index + 1);
-
-        itemDiv.appendChild(img);
-
-        itemDiv.onclick = () => {
-            localStorage.setItem("desait_avatar_idx_" + activeEmail, index);
-            wrapper.style.backgroundColor = item.bg;
-            imgDisplay.src = item.img;
-
-            document.querySelectorAll(".avatar-item").forEach(el => el.classList.remove("selected"));
-            itemDiv.classList.add("selected");
-            
-            updateHeaderUI();
-        };
-
-        grid.appendChild(itemDiv);
-    });
-}
-
-function handleAuthClick() {
-    const savedUser = localStorage.getItem("desait_user");
-    if (savedUser) {
-        document.getElementById("profileEmailDisplay").textContent = savedUser;
-        renderAvatarGrid();
-        profileModal.classList.add("active");
-        document.body.style.overflow = "hidden";
-    } else {
-        loginModal.classList.add("active");
-        document.body.style.overflow = "hidden";
-    }
-}
-
-function closeLoginModal() {
-    loginModal.classList.remove("active");
-    document.body.style.overflow = "";
-}
-
-function outsideLoginClick(event) {
-    if (event.target === loginModal) closeLoginModal();
-}
-
-function closeAuthModal() {
-    authModal.classList.remove("active");
-    document.body.style.overflow = "";
-}
-
-function outsideAuthClick(event) {
-    if (event.target === authModal) closeAuthModal();
-}
-
-function closeProfileModal() {
-    profileModal.classList.remove("active");
-    document.body.style.overflow = "";
-}
-
-function outsideProfileClick(event) {
-    if (event.target === profileModal) closeProfileModal();
-}
-
-function switchToRegister(e) {
-    e.preventDefault();
-    closeLoginModal();
-    authModal.classList.add("active");
-}
-
-function switchToLogin(e) {
-    e.preventDefault();
-    closeAuthModal();
-    loginModal.classList.add("active");
-}
-
-function handleRegister(e) {
-    e.preventDefault();
-    const email = document.getElementById("regEmail").value.trim();
-    const password = document.getElementById("regPassword").value;
-
-    const minLength = password.length >= 8;
-    const hasLetters = /[A-Za-zА-Яа-яЁё]/.test(password);
-    const hasNumbers = /[0-9]/.test(password);
-
-    if (!minLength || !hasLetters || !hasNumbers) {
-        alert("Пароль должен содержать не менее 8 символов, а также обязательно включать буквы и цифры!");
-        return;
-    }
-
-    if (email && password) {
-        localStorage.setItem("desait_user", email);
-        localStorage.setItem("desait_pass_" + email, password);
-        if (localStorage.getItem("desait_avatar_idx_" + email) === null) {
-            localStorage.setItem("desait_avatar_idx_" + email, "0");
-        }
-        closeAuthModal();
-        document.getElementById("profileEmailDisplay").textContent = email;
-        renderAvatarGrid();
-        updateHeaderUI();
-        profileModal.classList.add("active");
-        document.body.style.overflow = "hidden";
-    }
-}
-
-function handleLogin(e) {
-    e.preventDefault();
-    const email = document.getElementById("loginEmail").value.trim();
-    const password = document.getElementById("loginPassword").value;
-    
-    if (email && password) {
-        const savedPass = localStorage.getItem("desait_pass_" + email);
-        
-        if (savedPass === null) {
-            alert("Аккаунт с такой почтой не найден! Сначала зарегистрируйтесь.");
-            closeLoginModal();
-            authModal.classList.add("active");
-            return;
-        }
-
-        if (savedPass !== password) {
-            alert("Неверный пароль!");
-            return;
-        }
-
-        localStorage.setItem("desait_user", email);
-        if (localStorage.getItem("desait_avatar_idx_" + email) === null) {
-            localStorage.setItem("desait_avatar_idx_" + email, "0");
-        }
-        closeLoginModal();
-        document.getElementById("profileEmailDisplay").textContent = email;
-        renderAvatarGrid();
-        updateHeaderUI();
-        profileModal.classList.add("active");
-        document.body.style.overflow = "hidden";
-    }
-}
-
-function handleLogout() {
-    localStorage.removeItem("desait_user");
-    closeProfileModal();
-    updateHeaderUI();
-    alert("Вы вышли из аккаунта.");
-}
-
-productSelect.addEventListener("change", updatePrice);
-
-document.getElementById("orderForm").addEventListener("submit", async function(event) {
-    event.preventDefault();
-
-    const product = productSelect.value;
-    const contact = document.getElementById("contactInput").value.trim();
-    const comment = document.getElementById("commentInput").value.trim();
-    const price = formatPrice(prices[product]);
-
-    if (!contact) {
-        alert("Укажи контакт для связи.");
-        return;
-    }
-
-    preparedOrder =
-        "🎄 ЗИМНЯЯ ЗАЯВКА — DESAIT STORE ❄️\n" +
-        "Товар: " + product + "\n" +
-        "Стоимость: " + price + "\n" +
-        "Контакт: " + contact +
-        (comment ? "\nКомментарий: " + comment : "");
-
-    document.getElementById("orderText").textContent = preparedOrder;
-    orderResult.classList.add("show");
-
-    try {
-        await fetch(
-            "https://script.google.com/macros/s/AKfycbzqjzNewXXgs8tws4QVnnXkPUcpMVTajlgQXnVhHVTQgEzJlaMgzNCO2Oad7WeEKbeO/exec",
-            {
-                method: "POST",
-                mode: "no-cors",
-                headers: { "Content-Type": "text/plain;charset=utf-8" },
-                body: JSON.stringify({ product: product, price: price, contact: contact, comment: comment })
-            }
-        );
-        alert("Заявка успешно отправлена на обработку!");
-    } catch (error) {
-        console.error(error);
-    }
-});
-
-async function copyOrder() {
-    if (!preparedOrder) return;
-    const button = document.getElementById("copyButton");
-    try {
-        await navigator.clipboard.writeText(preparedOrder);
-        button.textContent = "✓ Скопировано";
-    } catch (error) {
-        button.textContent = "✓ Скопировано";
-    }
-    setTimeout(() => { button.textContent = "Скопировать заявку"; }, 2000);
-}
-
-document.addEventListener("keydown", (e) => { 
-    if (e.key === "Escape") {
-        closeOrder();
-        closeLoginModal();
-        closeAuthModal();
-        closeProfileModal();
-    }
-});
-
-// === ЛОГИКА АВТО-НЕЙРОБОТА И ЗВУКОВОГО ОПОВЕЩЕНИЯ ===
-let currentLang = 'RU';
-let hasAutoOpened = false;
-let autoOpenTimer = null;
-
-// Синтезатор звука уведомления (Web Audio API)
-function playNotificationSound() {
-    try {
-        const AudioContext = window.AudioContext || window.webkitAudioContext;
-        if (!AudioContext) return;
-        const ctx = new AudioContext();
-
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(587.33, ctx.currentTime); // D5
-        osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.15); // A5
-
-        gain.gain.setValueAtTime(0.15, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.25);
-
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-
-        osc.start();
-        osc.stop(ctx.currentTime + 0.25);
-    } catch (e) {
-        console.log("Audio play allowed on user interaction");
-    }
-}
-
-const botDict = {
-    RU: {
-        toggleBtn: "Поддержка 24/7",
-        status: "Онлайн 24/7",
-        welcome: "Привет! ❄️ Я нейробот поддержки DESAIT STORE.",
-        promoOffer: "Хочешь бесплатный промокод на скидку для товаров? 🎁",
-        promoBtn: "ДА! 🎁",
-        placeholder: "Задайте вопрос...",
-        quickQ1: "🛒 Как купить?",
-        quickQ2: "⚡ Сколько доставка?",
-        quickQ3: "🛡️ Какие гарантии?",
-        answers: {
-            buy: "Для покупки выберите нужный товар в каталоге, нажмите 'КУПИТЬ' и заполните короткую форму с вашим Telegram. Заявка моментально уйдет оператору!",
-            delivery: "Обычно доставка V-Bucks и кодов занимает от 5 до 15 минут после оплаты. Мы работаем круглосуточно!",
-            guarantee: "Мы гарантируем 100% официальное получение товаров без риска бана. Наш магазин работает с прямыми поставщиками Epic Games!",
-            vbucks: "V-Bucks зачисляются прямо на ваш аккаунт или отправляются гифтом. Выбирайте выгоду с набором 2400 V-Bucks!",
-            steam: "Пополнение Steam происходит моментально по вашему логину с комиссией всего 8%.",
-            default: "Спасибо за вопрос! Наш менеджер примет ваш запрос при оформлении заявки через кнопку 'Заказать'."
-        }
-    },
-    EN: {
-        toggleBtn: "Support 24/7",
-        status: "Online 24/7",
-        welcome: "Hello! ❄️ I'm the DESAIT STORE AI support bot.",
-        promoOffer: "Do you want a free discount promo code for items? 🎁",
-        promoBtn: "YES! 🎁",
-        placeholder: "Ask a question...",
-        quickQ1: "🛒 How to buy?",
-        quickQ2: "⚡ Delivery time?",
-        quickQ3: "🛡️ Guarantees?",
-        answers: {
-            buy: "To purchase, choose a product from the catalog, click 'BUY' and fill in your Telegram handle. Our operator will process it instantly!",
-            delivery: "Usually, V-Bucks and items delivery takes 5 to 15 minutes after payment. We operate 24/7!",
-            guarantee: "We guarantee 100% official digital delivery without any risk to your account!",
-            vbucks: "V-Bucks are credited directly to your Epic Games account. Check out our best deal on 2400 V-Bucks!",
-            steam: "Steam Wallet top-ups are processed instantly via your username with an 8% fee.",
-            default: "Thank you for your message! Our operator will review your order once submitted via the 'Order' button."
-        }
-    }
-};
-
-function toggleAIChat() {
-    const chatWin = document.getElementById("aiChatWindow");
-    chatWin.classList.toggle("active");
-    hasAutoOpened = true;
-    if (autoOpenTimer) clearTimeout(autoOpenTimer);
-}
-
-// Запуск авто-открытия через 18 секунд после захода на сайт
-autoOpenTimer = setTimeout(() => {
-    if (!hasAutoOpened) {
-        const chatWin = document.getElementById("aiChatWindow");
-        if (!chatWin.classList.contains("active")) {
-            chatWin.classList.add("active");
-            playNotificationSound();
-            hasAutoOpened = true;
-        }
-    }
-}, 18000);
-
-function toggleLanguage() {
-    currentLang = currentLang === 'RU' ? 'EN' : 'RU';
-    const langData = botDict[currentLang];
-    
-    document.getElementById("supportToggleText").textContent = langData.toggleBtn;
-    document.getElementById("chatHeaderStatus").textContent = langData.status;
-    document.getElementById("chatInput").placeholder = langData.placeholder;
-    document.getElementById("welcomeMsg").textContent = langData.welcome;
-
-    const offerDiv = document.getElementById("promoOfferMsg");
-    if (offerDiv) {
-        offerDiv.innerHTML = `${langData.promoOffer}<br><button class="promo-action-btn" onclick="claimPromoCode()">${langData.promoBtn}</button>`;
-    }
-
-    const quickBtns = document.getElementById("quickQuestions").children;
-    quickBtns[0].textContent = langData.quickQ1;
-    quickBtns[2].textContent = langData.quickQ3;
-
-    if (currentLang === 'EN') {
-        quickBtns[1].textContent = "⚡ Delivery time?";
-        quickBtns[0].onclick = () => sendQuickQ('how to buy');
-        quickBtns[1].onclick = () => sendQuickQ('delivery');
-        quickBtns[2].onclick = () => sendQuickQ('guarantees');
-    } else {
-        quickBtns[1].textContent = "⚡ Сколько доставка?";
-        quickBtns[0].onclick = () => sendQuickQ('как купить');
-        quickBtns[1].onclick = () => sendQuickQ('доставка');
-        quickBtns[2].onclick = () => sendQuickQ('гарантии');
-    }
-}
-
-function claimPromoCode() {
-    appendMessage(botDict[currentLang].promoBtn, "user");
-    showTyping();
-
-    setTimeout(() => {
-        removeTyping();
-        const promoText = currentLang === 'RU' 
-            ? "Держи твой секретный промокод: 🎁 **WINTER2026** (-10%)\n\nА также подписывайся на наш Telegram с эксклюзивными раздачами V-Bucks и подарками:"
-            : "Here is your secret promo code: 🎁 **WINTER2026** (-10%)\n\nAlso join our Telegram channel for free giveaways and gifts:";
-
-        const msgDiv = document.createElement("div");
-        msgDiv.className = "chat-msg bot";
-        msgDiv.innerHTML = `${promoText}<br><a href="https://t.me/" target="_blank" class="tg-link-btn">✈️ Telegram Раздачи & Бонусы</a>`;
-        
-        const chatBody = document.getElementById("chatBody");
-        chatBody.appendChild(msgDiv);
-        chatBody.scrollTop = chatBody.scrollHeight;
-    }, 900);
-}
-
-function appendMessage(text, sender) {
-    const chatBody = document.getElementById("chatBody");
-    const msgDiv = document.createElement("div");
-    msgDiv.className = `chat-msg ${sender}`;
-    msgDiv.textContent = text;
-    chatBody.appendChild(msgDiv);
-    chatBody.scrollTop = chatBody.scrollHeight;
-}
-
-function showTyping() {
-    const chatBody = document.getElementById("chatBody");
-    const typingDiv = document.createElement("div");
-    typingDiv.className = "chat-msg bot typing-indicator-wrap";
-    typingDiv.id = "typingIndicator";
-    typingDiv.innerHTML = `
-        <div class="typing-indicator">
-            <span></span><span></span><span></span>
-        </div>
-    `;
-    chatBody.appendChild(typingDiv);
-    chatBody.scrollTop = chatBody.scrollHeight;
-}
-
-function removeTyping() {
-    const indicator = document.getElementById("typingIndicator");
-    if (indicator) indicator.remove();
-}
-
-function getBotReply(userText) {
-    const lower = userText.toLowerCase();
-    const dict = botDict[currentLang].answers;
-
-    if (lower.includes("купить") || lower.includes("buy") || lower.includes("оплатить") || lower.includes("order")) return dict.buy;
-    if (lower.includes("доставка") || lower.includes("долго") || lower.includes("время") || lower.includes("delivery") || lower.includes("time")) return dict.delivery;
-    if (lower.includes("гарант") || lower.includes("бан") || lower.includes("риск") || lower.includes("guarantee") || lower.includes("safe")) return dict.guarantee;
-    if (lower.includes("vbucks") || lower.includes("вбакс") || lower.includes("баксы")) return dict.vbucks;
-    if (lower.includes("steam") || lower.includes("стим")) return dict.steam;
-
-    return dict.default;
-}
-
-function processBotResponse(userText) {
-    showTyping();
-    setTimeout(() => {
-        removeTyping();
-        const reply = getBotReply(userText);
-        appendMessage(reply, "bot");
-    }, 1000);
-}
-
-function sendUserMsg() {
-    const input = document.getElementById("chatInput");
-    const text = input.value.trim();
-    if (!text) return;
-
-    appendMessage(text, "user");
-    input.value = "";
-    processBotResponse(text);
-}
-
-function sendQuickQ(text) {
-    appendMessage(text, "user");
-    processBotResponse(text);
-}
-
-updateHeaderUI();
-</script>
-</body>
-</html>
+</div><script> const prices = { "800 V-Bucks": 590, "2400 V-Bucks": 1100, "4500 V-Bucks": 1990, "Fortnite Crew": 410, "Кража века": 1090, "Набор заданий «Бинты и уши»": 490, "Набор «Искусный взлом»": 490, "Telegram Premium — 1 месяц": 440, "Telegram Premium — 3 месяца": 1039, "Telegram Premium — 6 месяцев": 1340, "Telegram Premium — 12 месяцев": 2380, "Telegram Stars — 50 звёзд": 90, "Telegram Stars — 100 звёзд": 170, "Telegram Stars — 200 звёзд": 330, "Telegram Stars — 500 звёзд": 790, "Пополнение Steam": null, "Игры и подарки Steam": null }; // Официальные картинки скинов Fortnite const fortniteAvatarsNew = [ { bg: "#020617", img: "https://fortnite-api.com/images/cosmetics/br/character_jonesy_fortnite/icon.png" }, { bg: "#020617", img: "https://fortnite-api.com/images/cosmetics/br/cid_028_athena_commando_f/icon.png" }, { bg: "#020617", img: "https://fortnite-api.com/images/cosmetics/br/cid_029_athena_commando_m_halloween/icon.png" }, { bg: "#020617", img: "https://fortnite-api.com/images/cosmetics/br/cid_030_athena_commando_m_halloween/icon.png" }, { bg: "#020617", img: "https://fortnite-api.com/images/cosmetics/br/cid_116_athena_commando_m_cyborg/icon.png" }, { bg: "#020617", img: "https://fortnite-api.com/images/cosmetics/br/cid_175_athena_commando_m_celestial/icon.png" }, { bg: "#020617", img: "https://fortnite-api.com/images/cosmetics/br/cid_313_athena_commando_m_kpopfashion/icon.png" }, { bg: "#020617", img: "https://fortnite-api.com/images/cosmetics/br/cid_431_athena_commando_m_virgil/icon.png" }, { bg: "#020617", img: "https://fortnite-api.com/images/cosmetics/br/cid_516_athena_commando_m_banana/icon.png" }, { bg: "#020617", img: "https://fortnite-api.com/images/cosmetics/br/cid_342_athena_commando_m_streetgoth/icon.png" } ]; const modal = document.getElementById("orderModal"); const loginModal = document.getElementById("loginModal"); const authModal = document.getElementById("authModal"); const profileModal = document.getElementById("profileModal"); const productSelect = document.getElementById("productSelect"); const totalPrice = document.getElementById("totalPrice"); const orderResult = document.getElementById("orderResult"); let preparedOrder = ""; document.getElementById("year").textContent = new Date().getFullYear(); const canvas = document.getElementById("snowCanvas"); const ctx = canvas.getContext("2d"); function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; } window.addEventListener("resize", resizeCanvas); resizeCanvas(); const snowflakes = []; for (let i = 0; i < 110; i++) { snowflakes.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, radius: Math.random() * 3 + 1, speed: Math.random() * 1.5 + 0.5, wind: Math.random() * 1 - 0.5 }); } function drawSnow() { ctx.clearRect(0, 0, canvas.width, canvas.height); ctx.fillStyle = "rgba(255, 255, 255, 0.85)"; ctx.beginPath(); for (let flake of snowflakes) { ctx.moveTo(flake.x, flake.y); ctx.arc(flake.x, flake.y, flake.radius, 0, Math.PI * 2, true); } ctx.fill(); updateSnow(); requestAnimationFrame(drawSnow); } function updateSnow() { for (let flake of snowflakes) { flake.y += flake.speed; flake.x += flake.wind; if (flake.y > canvas.height) { flake.y = 0; flake.x = Math.random() * canvas.width; } } } drawSnow(); function formatPrice(price) { return price === null || price === undefined ? "Уточнить" : price.toLocaleString("ru-RU") + " ₽"; } function updatePrice() { totalPrice.textContent = formatPrice(prices[productSelect.value]); } function openOrder(product) { modal.classList.add("active"); document.body.style.overflow = "hidden"; orderResult.classList.remove("show"); if (product && Object.prototype.hasOwnProperty.call(prices, product)) { productSelect.value = product; } updatePrice(); } function closeOrder() { modal.classList.remove("active"); document.body.style.overflow = ""; } function outsideClick(event) { if (event.target === modal) closeOrder(); } function updateHeaderUI() { const activeEmail = localStorage.getItem("desait_user"); const authBtn = document.getElementById("authNavBtn"); if (activeEmail) { let savedIndex = localStorage.getItem("desait_avatar_idx_" + activeEmail); if (savedIndex === null || savedIndex >= fortniteAvatarsNew.length) { savedIndex = 0; } else { savedIndex = parseInt(savedIndex, 10); } const avatarUrl = fortniteAvatarsNew[savedIndex].img; authBtn.className = "header-button header-profile-btn"; authBtn.innerHTML = `<img src="${avatarUrl}" alt="Аватар"> Профиль`; } else { authBtn.className = "header-button"; authBtn.innerHTML = `👤 Вход / Профиль`; } } function renderAvatarGrid() { const grid = document.getElementById("avatarGrid"); grid.innerHTML = ""; const activeEmail = localStorage.getItem("desait_user"); let savedIndex = localStorage.getItem("desait_avatar_idx_" + activeEmail); if (savedIndex === null || savedIndex >= fortniteAvatarsNew.length) { savedIndex = 0; } else { savedIndex = parseInt(savedIndex, 10); } const currentAvatar = fortniteAvatarsNew[savedIndex]; const wrapper = document.getElementById("currentAvatarWrapper"); const imgDisplay = document.getElementById("currentAvatarImg"); wrapper.style.backgroundColor = currentAvatar.bg; imgDisplay.src = currentAvatar.img; fortniteAvatarsNew.forEach((item, index) => { const itemDiv = document.createElement("div"); itemDiv.className = "avatar-item" + (index === savedIndex ? " selected" : ""); itemDiv.style.backgroundColor = item.bg; const img = document.createElement("img"); img.src = item.img; img.alt = "Avatar " + (index + 1); itemDiv.appendChild(img); itemDiv.onclick = () => { localStorage.setItem("desait_avatar_idx_" + activeEmail, index); wrapper.style.backgroundColor = item.bg; imgDisplay.src = item.img; document.querySelectorAll(".avatar-item").forEach(el => el.classList.remove("selected")); itemDiv.classList.add("selected"); updateHeaderUI(); }; grid.appendChild(itemDiv); }); } function handleAuthClick() { const savedUser = localStorage.getItem("desait_user"); if (savedUser) { document.getElementById("profileEmailDisplay").textContent = savedUser; renderAvatarGrid(); profileModal.classList.add("active"); document.body.style.overflow = "hidden"; } else { loginModal.classList.add("active"); document.body.style.overflow = "hidden"; } } function closeLoginModal() { loginModal.classList.remove("active"); document.body.style.overflow = ""; } function outsideLoginClick(event) { if (event.target === loginModal) closeLoginModal(); } function closeAuthModal() { authModal.classList.remove("active"); document.body.style.overflow = ""; } function outsideAuthClick(event) { if (event.target === authModal) closeAuthModal(); } function closeProfileModal() { profileModal.classList.remove("active"); document.body.style.overflow = ""; } function outsideProfileClick(event) { if (event.target === profileModal) closeProfileModal(); } function switchToRegister(e) { e.preventDefault(); closeLoginModal(); authModal.classList.add("active"); } function switchToLogin(e) { e.preventDefault(); closeAuthModal(); loginModal.classList.add("active"); } function handleRegister(e) { e.preventDefault(); const email = document.getElementById("regEmail").value.trim(); const password = document.getElementById("regPassword").value; const minLength = password.length >= 8; const hasLetters = /[A-Za-zА-Яа-яЁё]/.test(password); const hasNumbers = /[0-9]/.test(password); if (!minLength || !hasLetters || !hasNumbers) { alert("Пароль должен содержать не менее 8 символов, а также обязательно включать буквы и цифры!"); return; } if (email && password) { localStorage.setItem("desait_user", email); localStorage.setItem("desait_pass_" + email, password); if (localStorage.getItem("desait_avatar_idx_" + email) === null) { localStorage.setItem("desait_avatar_idx_" + email, "0"); } closeAuthModal(); document.getElementById("profileEmailDisplay").textContent = email; renderAvatarGrid(); updateHeaderUI(); profileModal.classList.add("active"); document.body.style.overflow = "hidden"; } } function handleLogin(e) { e.preventDefault(); const email = document.getElementById("loginEmail").value.trim(); const password = document.getElementById("loginPassword").value; if (email && password) { const savedPass = localStorage.getItem("desait_pass_" + email); if (savedPass === null) { alert("Аккаунт с такой почтой не найден! Сначала зарегистрируйтесь."); closeLoginModal(); authModal.classList.add("active"); return; } if (savedPass !== password) { alert("Неверный пароль!"); return; } localStorage.setItem("desait_user", email); if (localStorage.getItem("desait_avatar_idx_" + email) === null) { localStorage.setItem("desait_avatar_idx_" + email, "0"); } closeLoginModal(); document.getElementById("profileEmailDisplay").textContent = email; renderAvatarGrid(); updateHeaderUI(); profileModal.classList.add("active"); document.body.style.overflow = "hidden"; } } // === ИМИТАЦИЯ ВХОДА ЧЕРЕЗ GOOGLE === function handleGoogleLogin() { const mockEmail = prompt("🔐 Симуляция Google Авторизации\n\nВведите ваш Gmail аккаунт (например: user@gmail.com):"); if (!mockEmail) return; if (!mockEmail.includes("@")) { alert("Пожалуйста, введите корректный email-адрес!"); return; } // Сохраняем сессию localStorage.setItem("desait_user", mockEmail); if (localStorage.getItem("desait_avatar_idx_" + mockEmail) === null) { localStorage.setItem("desait_avatar_idx_" + mockEmail, "0"); } closeLoginModal(); closeAuthModal(); document.getElementById("profileEmailDisplay").textContent = mockEmail; renderAvatarGrid(); updateHeaderUI(); profileModal.classList.add("active"); document.body.style.overflow = "hidden"; alert("✅ Успешный вход через Google!"); } function handleLogout() { localStorage.removeItem("desait_user"); closeProfileModal(); updateHeaderUI(); alert("Вы вышли из аккаунта."); } productSelect.addEventListener("change", updatePrice); document.getElementById("orderForm").addEventListener("submit", async function(event) { event.preventDefault(); const product = productSelect.value; const contact = document.getElementById("contactInput").value.trim(); const comment = document.getElementById("commentInput").value.trim(); const price = formatPrice(prices[product]); if (!contact) { alert("Укажи контакт для связи."); return; } preparedOrder = "🎄 ЗИМНЯЯ ЗАЯВКА — DESAIT STORE ❄️\n" + "Товар: " + product + "\n" + "Стоимость: " + price + "\n" + "Контакт: " + contact + (comment ? "\nКомментарий: " + comment : ""); document.getElementById("orderText").textContent = preparedOrder; orderResult.classList.add("show"); try { await fetch( "https://script.google.com/macros/s/AKfycbzqjzNewXXgs8tws4QVnnXkPUcpMVTajlgQXnVhHVTQgEzJlaMgzNCO2Oad7WeEKbeO/exec", { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify({ product: product, price: price, contact: contact, comment: comment }) } ); alert("Заявка успешно отправлена на обработку!"); } catch (error) { console.error(error); } }); async function copyOrder() { if (!preparedOrder) return; const button = document.getElementById("copyButton"); try { await navigator.clipboard.writeText(preparedOrder); button.textContent = "✓ Скопировано"; } catch (error) { button.textContent = "✓ Скопировано"; } setTimeout(() => { button.textContent = "Скопировать заявку"; }, 2000); } document.addEventListener("keydown", (e) => { if (e.key === "Escape") { closeOrder(); closeLoginModal(); closeAuthModal(); closeProfileModal(); } }); // === ЛОГИКА АВТО-НЕЙРОБОТА И ЗВУКОВОГО ОПОВЕЩЕНИЯ === let currentLang = 'RU'; let hasAutoOpened = false; let autoOpenTimer = null; function playNotificationSound() { try { const AudioContext = window.AudioContext || window.webkitAudioContext; if (!AudioContext) return; const ctx = new AudioContext(); const osc = ctx.createOscillator(); const gain = ctx.createGain(); osc.type = 'sine'; osc.frequency.setValueAtTime(587.33, ctx.currentTime); osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.15); gain.gain.setValueAtTime(0.15, ctx.currentTime); gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.25); osc.connect(gain); gain.connect(ctx.destination); osc.start(); osc.stop(ctx.currentTime + 0.25); } catch (e) { console.log("Audio play allowed on user interaction"); } } const botDict = { RU: { toggleBtn: "Поддержка 24/7", status: "Онлайн 24/7", welcome: "Привет! ❄️ Я нейробот поддержки DESAIT STORE.", promoOffer: "Хочешь бесплатный промокод на скидку для товаров? 🎁", promoBtn: "ДА! 🎁", placeholder: "Задайте вопрос...", quickQ1: "🛒 Как купить?", quickQ2: "⚡ Сколько доставка?", quickQ3: "🛡️ Какие гарантии?", answers: { buy: "Для покупки выберите нужный товар в каталоге, нажмите 'КУПИТЬ' и заполните короткую форму с вашим Telegram. Заявка моментально уйдет оператору!", delivery: "Обычно доставка V-Bucks и кодов занимает от 5 до 15 минут после оплаты. Мы работаем круглосуточно!", guarantee: "Мы гарантируем 100% официальное получение товаров без риска бана. Наш магазин работает с прямыми поставщиками Epic Games!", vbucks: "V-Bucks зачисляются прямо на ваш аккаунт или отправляются гифтом. Выбирайте выгоду с набором 2400 V-Bucks!", steam: "Пополнение Steam происходит моментально по вашему логину с комиссией всего 8%.", default: "Спасибо за вопрос! Наш менеджер примет ваш запрос при оформлении заявки через кнопку 'Заказать'." } }, EN: { toggleBtn: "Support 24/7", status: "Online 24/7", welcome: "Hello! ❄️ I'm the DESAIT STORE AI support bot.", promoOffer: "Do you want a free discount promo code for items? 🎁", promoBtn: "YES! 🎁", placeholder: "Ask a question...", quickQ1: "🛒 How to buy?", quickQ2: "⚡ Delivery time?", quickQ3: "🛡️ Guarantees?", answers: { buy: "To purchase, choose a product from the catalog, click 'BUY' and fill in your Telegram handle. Our operator will process it instantly!", delivery: "Usually, V-Bucks and items delivery takes 5 to 15 minutes after payment. We operate 24/7!", guarantee: "We guarantee 100% official digital delivery without any risk to your account!", vbucks: "V-Bucks are credited directly to your Epic Games account. Check out our best deal on 2400 V-Bucks!", steam: "Steam Wallet top-ups are processed instantly via your username with an 8% fee.", default: "Thank you for your message! Our operator will review your order once submitted via the 'Order' button." } } }; function toggleAIChat() { const chatWin = document.getElementById("aiChatWindow"); chatWin.classList.toggle("active"); hasAutoOpened = true; if (autoOpenTimer) clearTimeout(autoOpenTimer); } autoOpenTimer = setTimeout(() => { if (!hasAutoOpened) { const chatWin = document.getElementById("aiChatWindow"); if (!chatWin.classList.contains("active")) { chatWin.classList.add("active"); playNotificationSound(); hasAutoOpened = true; } } }, 18000); function toggleLanguage() { currentLang = currentLang === 'RU' ? 'EN' : 'RU'; const langData = botDict[currentLang]; document.getElementById("supportToggleText").textContent = langData.toggleBtn; document.getElementById("chatHeaderStatus").textContent = langData.status; document.getElementById("chatInput").placeholder = langData.placeholder; document.getElementById("welcomeMsg").textContent = langData.welcome; const offerDiv = document.getElementById("promoOfferMsg"); if (offerDiv) { offerDiv.innerHTML = `${langData.promoOffer}<br><button class="promo-action-btn" onclick="claimPromoCode()">${langData.promoBtn}</button>`; } const quickBtns = document.getElementById("quickQuestions").children; quickBtns[0].textContent = langData.quickQ1; quickBtns[2].textContent = langData.quickQ3; if (currentLang === 'EN') { quickBtns[1].textContent = "⚡ Delivery time?"; quickBtns[0].onclick = () => sendQuickQ('how to buy'); quickBtns[1].onclick = () => sendQuickQ('delivery'); quickBtns[2].onclick = () => sendQuickQ('guarantees'); } else { quickBtns[1].textContent = "⚡ Сколько доставка?"; quickBtns[0].onclick = () => sendQuickQ('как купить'); quickBtns[1].onclick = () => sendQuickQ('доставка'); quickBtns[2].onclick = () => sendQuickQ('гарантии'); } } function claimPromoCode() { appendMessage(botDict[currentLang].promoBtn, "user"); showTyping(); setTimeout(() => { removeTyping(); const promoText = currentLang === 'RU' ? "Держи твой секретный промокод: 🎁 **WINTER2026** (-10%)\n\nА также подписывайся на наш Telegram с эксклюзивными раздачами V-Bucks и подарками:" : "Here is your secret promo code: 🎁 **WINTER2026** (-10%)\n\nAlso join our Telegram channel for free giveaways and gifts:"; const msgDiv = document.createElement("div"); msgDiv.className = "chat-msg bot"; msgDiv.innerHTML = `${promoText}<br><a href="https://t.me/" target="_blank" class="tg-link-btn">✈️ Telegram Раздачи & Бонусы</a>`; const chatBody = document.getElementById("chatBody"); chatBody.appendChild(msgDiv); chatBody.scrollTop = chatBody.scrollHeight; }, 900); } function appendMessage(text, sender) { const chatBody = document.getElementById("chatBody"); const msgDiv = document.createElement("div"); msgDiv.className = `chat-msg ${sender}`; msgDiv.textContent = text; chatBody.appendChild(msgDiv); chatBody.scrollTop = chatBody.scrollHeight; } function showTyping() { const chatBody = document.getElementById("chatBody"); const typingDiv = document.createElement("div"); typingDiv.className = "chat-msg bot typing-indicator-wrap"; typingDiv.id = "typingIndicator"; typingDiv.innerHTML = `<div class="typing-indicator"><span></span><span></span><span></span></div>`; chatBody.appendChild(typingDiv); chatBody.scrollTop = chatBody.scrollHeight; } function removeTyping() { const indicator = document.getElementById("typingIndicator"); if (indicator) indicator.remove(); } function getBotReply(userText) { const lower = userText.toLowerCase(); const dict = botDict[currentLang].answers; if (lower.includes("купить") || lower.includes("buy") || lower.includes("оплатить") || lower.includes("order")) return dict.buy; if (lower.includes("доставка") || lower.includes("долго") || lower.includes("время") || lower.includes("delivery") || lower.includes("time")) return dict.delivery; if (lower.includes("гарант") || lower.includes("бан") || lower.includes("риск") || lower.includes("guarantee") || lower.includes("safe")) return dict.guarantee; if (lower.includes("vbucks") || lower.includes("вбакс") || lower.includes("баксы")) return dict.vbucks; if (lower.includes("steam") || lower.includes("стим")) return dict.steam; return dict.default; } function processBotResponse(userText) { showTyping(); setTimeout(() => { removeTyping(); const reply = getBotReply(userText); appendMessage(reply, "bot"); }, 1000); } function sendUserMsg() { const input = document.getElementById("chatInput"); const text = input.value.trim(); if (!text) return; appendMessage(text, "user"); input.value = ""; processBotResponse(text); } function sendQuickQ(text) { appendMessage(text, "user"); processBotResponse(text); } updateHeaderUI(); </script></body> </html>
+```
